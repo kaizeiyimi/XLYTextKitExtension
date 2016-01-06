@@ -8,15 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		F6F8BA3F1C3D0749005A7A29 /* XLYTextKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F8BA3E1C3D0749005A7A29 /* XLYTextKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F6F8BA461C3D0749005A7A29 /* XLYTextKitExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; };
-		F6F8BA4B1C3D0749005A7A29 /* XLYTextKitExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F8BA4A1C3D0749005A7A29 /* XLYTextKitExtensionTests.swift */; };
 		F6F92EE71C3D07A9002880B5 /* XLYAidUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F92EE41C3D07A9002880B5 /* XLYAidUtils.swift */; };
 		F6F92EE81C3D07A9002880B5 /* XLYTextKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F92EE51C3D07A9002880B5 /* XLYTextKitExtension.swift */; };
 		F6F92EE91C3D07A9002880B5 /* XLYTextLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F92EE61C3D07A9002880B5 /* XLYTextLayoutManager.swift */; };
+		F6FC6DB01C3D12B200FF8DB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DAF1C3D12B200FF8DB4 /* AppDelegate.swift */; };
+		F6FC6DB21C3D12B200FF8DB4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DB11C3D12B200FF8DB4 /* FirstViewController.swift */; };
+		F6FC6DB41C3D12B200FF8DB4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DB31C3D12B200FF8DB4 /* SecondViewController.swift */; };
+		F6FC6DB71C3D12B200FF8DB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DB51C3D12B200FF8DB4 /* Main.storyboard */; };
+		F6FC6DB91C3D12B200FF8DB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DB81C3D12B200FF8DB4 /* Assets.xcassets */; };
+		F6FC6DBC1C3D12B200FF8DB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DBA1C3D12B200FF8DB4 /* LaunchScreen.storyboard */; };
+		F6FC6DC61C3D130000FF8DB4 /* dog0.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC21C3D130000FF8DB4 /* dog0.png */; };
+		F6FC6DC71C3D130000FF8DB4 /* dog1.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC31C3D130000FF8DB4 /* dog1.png */; };
+		F6FC6DC81C3D130000FF8DB4 /* dog2.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC41C3D130000FF8DB4 /* dog2.png */; };
+		F6FC6DC91C3D130000FF8DB4 /* dog3.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC51C3D130000FF8DB4 /* dog3.png */; };
+		F6FC6DCC1C3D184E00FF8DB4 /* XAutoLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6FC6DCA1C3D17E900FF8DB4 /* XAutoLayout.framework */; };
+		F6FC6DCD1C3D184E00FF8DB4 /* XAutoLayout.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6FC6DCA1C3D17E900FF8DB4 /* XAutoLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F6FC6DD01C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; };
+		F6FC6DD11C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F6F8BA471C3D0749005A7A29 /* PBXContainerItemProxy */ = {
+		F6FC6DD21C3D1A2C00FF8DB4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F6F8BA321C3D0749005A7A29 /* Project object */;
 			proxyType = 1;
@@ -25,16 +37,41 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F6FC6DCE1C3D184E00FF8DB4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F6FC6DD11C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Embed Frameworks */,
+				F6FC6DCD1C3D184E00FF8DB4 /* XAutoLayout.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XLYTextKitExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F8BA3E1C3D0749005A7A29 /* XLYTextKitExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLYTextKitExtension.h; sourceTree = "<group>"; };
 		F6F8BA401C3D0749005A7A29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F6F8BA451C3D0749005A7A29 /* XLYTextKitExtensionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLYTextKitExtensionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6F8BA4A1C3D0749005A7A29 /* XLYTextKitExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XLYTextKitExtensionTests.swift; sourceTree = "<group>"; };
-		F6F8BA4C1C3D0749005A7A29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6F92EE41C3D07A9002880B5 /* XLYAidUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYAidUtils.swift; sourceTree = "<group>"; };
 		F6F92EE51C3D07A9002880B5 /* XLYTextKitExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextKitExtension.swift; sourceTree = "<group>"; };
 		F6F92EE61C3D07A9002880B5 /* XLYTextLayoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextLayoutManager.swift; sourceTree = "<group>"; };
+		F6FC6DAD1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLYTextKitExtensionDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6FC6DAF1C3D12B200FF8DB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F6FC6DB11C3D12B200FF8DB4 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		F6FC6DB31C3D12B200FF8DB4 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		F6FC6DB61C3D12B200FF8DB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F6FC6DB81C3D12B200FF8DB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F6FC6DBB1C3D12B200FF8DB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F6FC6DBD1C3D12B200FF8DB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6FC6DC21C3D130000FF8DB4 /* dog0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog0.png; sourceTree = "<group>"; };
+		F6FC6DC31C3D130000FF8DB4 /* dog1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog1.png; sourceTree = "<group>"; };
+		F6FC6DC41C3D130000FF8DB4 /* dog2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog2.png; sourceTree = "<group>"; };
+		F6FC6DC51C3D130000FF8DB4 /* dog3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog3.png; sourceTree = "<group>"; };
+		F6FC6DCA1C3D17E900FF8DB4 /* XAutoLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XAutoLayout.framework; path = ../XAutoLayout.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,11 +82,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6F8BA421C3D0749005A7A29 /* Frameworks */ = {
+		F6FC6DAA1C3D12B200FF8DB4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6F8BA461C3D0749005A7A29 /* XLYTextKitExtension.framework in Frameworks */,
+				F6FC6DD01C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Frameworks */,
+				F6FC6DCC1C3D184E00FF8DB4 /* XAutoLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				F6F8BA3D1C3D0749005A7A29 /* XLYTextKitExtension */,
-				F6F8BA491C3D0749005A7A29 /* XLYTextKitExtensionTests */,
+				F6FC6DAE1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo */,
 				F6F8BA3C1C3D0749005A7A29 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,7 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */,
-				F6F8BA451C3D0749005A7A29 /* XLYTextKitExtensionTests.xctest */,
+				F6FC6DAD1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,20 +123,38 @@
 			path = XLYTextKitExtension;
 			sourceTree = "<group>";
 		};
-		F6F8BA491C3D0749005A7A29 /* XLYTextKitExtensionTests */ = {
-			isa = PBXGroup;
-			children = (
-				F6F8BA4A1C3D0749005A7A29 /* XLYTextKitExtensionTests.swift */,
-				F6F8BA4C1C3D0749005A7A29 /* Info.plist */,
-			);
-			path = XLYTextKitExtensionTests;
-			sourceTree = "<group>";
-		};
 		F6F92EEA1C3D0823002880B5 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
 				F6F8BA401C3D0749005A7A29 /* Info.plist */,
 				F6F8BA3E1C3D0749005A7A29 /* XLYTextKitExtension.h */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
+		F6FC6DAE1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo */ = {
+			isa = PBXGroup;
+			children = (
+				F6FC6DAF1C3D12B200FF8DB4 /* AppDelegate.swift */,
+				F6FC6DB11C3D12B200FF8DB4 /* FirstViewController.swift */,
+				F6FC6DB31C3D12B200FF8DB4 /* SecondViewController.swift */,
+				F6FC6DB51C3D12B200FF8DB4 /* Main.storyboard */,
+				F6FC6DB81C3D12B200FF8DB4 /* Assets.xcassets */,
+				F6FC6DBA1C3D12B200FF8DB4 /* LaunchScreen.storyboard */,
+				F6FC6DCF1C3D185F00FF8DB4 /* Support Files */,
+			);
+			path = XLYTextKitExtensionDemo;
+			sourceTree = "<group>";
+		};
+		F6FC6DCF1C3D185F00FF8DB4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F6FC6DBD1C3D12B200FF8DB4 /* Info.plist */,
+				F6FC6DC21C3D130000FF8DB4 /* dog0.png */,
+				F6FC6DC31C3D130000FF8DB4 /* dog1.png */,
+				F6FC6DC41C3D130000FF8DB4 /* dog2.png */,
+				F6FC6DC51C3D130000FF8DB4 /* dog3.png */,
+				F6FC6DCA1C3D17E900FF8DB4 /* XAutoLayout.framework */,
 			);
 			name = "Support Files";
 			sourceTree = "<group>";
@@ -135,23 +191,24 @@
 			productReference = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F6F8BA441C3D0749005A7A29 /* XLYTextKitExtensionTests */ = {
+		F6FC6DAC1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F6F8BA521C3D0749005A7A29 /* Build configuration list for PBXNativeTarget "XLYTextKitExtensionTests" */;
+			buildConfigurationList = F6FC6DBE1C3D12B200FF8DB4 /* Build configuration list for PBXNativeTarget "XLYTextKitExtensionDemo" */;
 			buildPhases = (
-				F6F8BA411C3D0749005A7A29 /* Sources */,
-				F6F8BA421C3D0749005A7A29 /* Frameworks */,
-				F6F8BA431C3D0749005A7A29 /* Resources */,
+				F6FC6DA91C3D12B200FF8DB4 /* Sources */,
+				F6FC6DAA1C3D12B200FF8DB4 /* Frameworks */,
+				F6FC6DAB1C3D12B200FF8DB4 /* Resources */,
+				F6FC6DCE1C3D184E00FF8DB4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F6F8BA481C3D0749005A7A29 /* PBXTargetDependency */,
+				F6FC6DD31C3D1A2C00FF8DB4 /* PBXTargetDependency */,
 			);
-			name = XLYTextKitExtensionTests;
-			productName = XLYTextKitExtensionTests;
-			productReference = F6F8BA451C3D0749005A7A29 /* XLYTextKitExtensionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			name = XLYTextKitExtensionDemo;
+			productName = XLYTextKitExtensionDemo;
+			productReference = F6FC6DAD1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -166,7 +223,7 @@
 					F6F8BA3A1C3D0749005A7A29 = {
 						CreatedOnToolsVersion = 7.2;
 					};
-					F6F8BA441C3D0749005A7A29 = {
+					F6FC6DAC1C3D12B200FF8DB4 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -177,6 +234,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = F6F8BA311C3D0749005A7A29;
 			productRefGroup = F6F8BA3C1C3D0749005A7A29 /* Products */;
@@ -184,7 +242,7 @@
 			projectRoot = "";
 			targets = (
 				F6F8BA3A1C3D0749005A7A29 /* XLYTextKitExtension */,
-				F6F8BA441C3D0749005A7A29 /* XLYTextKitExtensionTests */,
+				F6FC6DAC1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -197,10 +255,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6F8BA431C3D0749005A7A29 /* Resources */ = {
+		F6FC6DAB1C3D12B200FF8DB4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6FC6DBC1C3D12B200FF8DB4 /* LaunchScreen.storyboard in Resources */,
+				F6FC6DC71C3D130000FF8DB4 /* dog1.png in Resources */,
+				F6FC6DC61C3D130000FF8DB4 /* dog0.png in Resources */,
+				F6FC6DB91C3D12B200FF8DB4 /* Assets.xcassets in Resources */,
+				F6FC6DB71C3D12B200FF8DB4 /* Main.storyboard in Resources */,
+				F6FC6DC81C3D130000FF8DB4 /* dog2.png in Resources */,
+				F6FC6DC91C3D130000FF8DB4 /* dog3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,23 +282,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6F8BA411C3D0749005A7A29 /* Sources */ = {
+		F6FC6DA91C3D12B200FF8DB4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6F8BA4B1C3D0749005A7A29 /* XLYTextKitExtensionTests.swift in Sources */,
+				F6FC6DB41C3D12B200FF8DB4 /* SecondViewController.swift in Sources */,
+				F6FC6DB01C3D12B200FF8DB4 /* AppDelegate.swift in Sources */,
+				F6FC6DB21C3D12B200FF8DB4 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F6F8BA481C3D0749005A7A29 /* PBXTargetDependency */ = {
+		F6FC6DD31C3D1A2C00FF8DB4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F6F8BA3A1C3D0749005A7A29 /* XLYTextKitExtension */;
-			targetProxy = F6F8BA471C3D0749005A7A29 /* PBXContainerItemProxy */;
+			targetProxy = F6FC6DD21C3D1A2C00FF8DB4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F6FC6DB51C3D12B200FF8DB4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6FC6DB61C3D12B200FF8DB4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F6FC6DBA1C3D12B200FF8DB4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6FC6DBB1C3D12B200FF8DB4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F6F8BA4D1C3D0749005A7A29 /* Debug */ = {
@@ -273,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -315,7 +401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -360,22 +446,36 @@
 			};
 			name = Release;
 		};
-		F6F8BA531C3D0749005A7A29 /* Debug */ = {
+		F6FC6DBF1C3D12B200FF8DB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = XLYTextKitExtensionTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionTests;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = XLYTextKitExtensionDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		F6F8BA541C3D0749005A7A29 /* Release */ = {
+		F6FC6DC01C3D12B200FF8DB4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = XLYTextKitExtensionTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionTests;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = XLYTextKitExtensionDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -401,14 +501,13 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F6F8BA521C3D0749005A7A29 /* Build configuration list for PBXNativeTarget "XLYTextKitExtensionTests" */ = {
+		F6FC6DBE1C3D12B200FF8DB4 /* Build configuration list for PBXNativeTarget "XLYTextKitExtensionDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F6F8BA531C3D0749005A7A29 /* Debug */,
-				F6F8BA541C3D0749005A7A29 /* Release */,
+				F6FC6DBF1C3D12B200FF8DB4 /* Debug */,
+				F6FC6DC01C3D12B200FF8DB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
