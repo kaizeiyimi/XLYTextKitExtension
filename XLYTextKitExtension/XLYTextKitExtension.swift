@@ -56,6 +56,7 @@ public struct XLYVisualItem {
 public struct XLYLineVisualInfo {
     public let rect: CGRect
     public let usedRect: CGRect
+    public let baseline: CGFloat
 }
 
 public class XLYPainter {
@@ -105,7 +106,13 @@ public class XLYTextAttachment: NSTextAttachment {
         self.bounds = bounds
     }
     
-    public convenience init(string: NSAttributedString, lineFragment: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero) {
+    public enum BaseLineMode {  // negative mean move down
+        case TextBaseLine(diff: CGFloat)
+        case LineUsedRectBottom(diff: CGFloat)
+        case AttachmentBottom(diff: CGFloat)
+    }
+    
+    public convenience init(string: NSAttributedString, lineFragment: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero, baselineMode: BaseLineMode = .TextBaseLine(diff: 0)) {
         let storage = NSTextStorage(attributedString: string)
         let length = storage.length
         if length == 0 {
@@ -146,7 +153,16 @@ public class XLYTextAttachment: NSTextAttachment {
                 })
             }
             associatedAttrString = string
-            stringBounds = CGRectMake(0, y - usedSize.height - insets.bottom, insets.left + usedSize.width + insets.right, insets.top + usedSize.height + insets.bottom)
+            var boundsY: CGFloat
+            switch baselineMode {
+            case .TextBaseLine(let diff):
+                boundsY = y - usedSize.height - insets.bottom + diff
+            case .LineUsedRectBottom(let diff):
+                boundsY = -insets.bottom + diff
+            case .AttachmentBottom(let diff):
+                boundsY = diff
+            }
+            stringBounds = CGRectMake(0, boundsY, insets.left + usedSize.width + insets.right, insets.top + usedSize.height + insets.bottom)
         }
     }
     

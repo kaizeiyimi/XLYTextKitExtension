@@ -18,6 +18,8 @@ class FirstViewController: UIViewController {
         
         // UITextView
         let textView = UITextView(frame: CGRectZero)
+//        textView.textContainer.lineBreakMode = .ByWordWrapping
+//        textView.textContainer.maximumNumberOfLines = 1
         textView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
         textView.backgroundColor = UIColor.lightGrayColor()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,56 +60,24 @@ class FirstViewController: UIViewController {
             attributes: [NSFontAttributeName: UIFont.systemFontOfSize(16),
                 NSForegroundColorAttributeName: UIColor.orangeColor(),
                 // add a painter for the background
-                "combined1.background": XLYPainter(type: .Background, handler: { (attributeName, context, lineInfo, visualItems) -> Void in
-                    let path = UIBezierPath(roundedRect: lineInfo.usedRect, cornerRadius: lineInfo.usedRect.height / 2)
-                    CGContextAddPath(context, path.CGPath)
-                    UIColor.purpleColor().setFill()
-                    CGContextFillPath(context)
-                })
+                "combined1.background": XLYPainter(type: .Background, handler: fillLineUsedRect(UIColor.purpleColor(), cornerFactor: 0.5))
             ])
-        let combined1Attachment = XLYTextAttachment(string: combined1, lineFragment: 10, insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        let combined1Attachment = XLYTextAttachment(string: combined1, lineFragment: 10, insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), baselineMode: .LineUsedRectBottom(diff: 0))
         let text4 = NSMutableAttributedString(attributedString: NSAttributedString(attachment: combined1Attachment))
         // add painter for whole attachment
-        text4.addAttributes(["combined1Attachment.background": XLYPainter(type: .Background, handler: { (attributeName, context, lineInfo, visualItems) -> Void in
-            UIColor.orangeColor().setFill()
-            visualItems.forEach {
-                CGContextFillRect(context, $0.rect)
-            }
-        })], range: NSMakeRange(0, 1))
+        text4.addAttributes(["combined1Attachment.background": XLYPainter(type: .Background, handler: fillIndependentGlyphRect(UIColor.orangeColor()))], range: NSMakeRange(0, 1))
         storage.appendAttributedString(text4)
         
         // combined text with view
         let combined2 = NSMutableAttributedString(string: "call@", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(16)])
         combined2.appendAttributedString(NSAttributedString(attachment: gifAttachment))
-        combined2.addAttribute("combined2.background", value: XLYPainter(type: .Background, handler: { (attributeName, context, lineInfo, visualItems) -> Void in
-            if visualItems.count >= 1 {
-                let rect = visualItems.suffixFrom(1).reduce(visualItems.first!.rect) {
-                    return $0.union($1.rect)
-                }
-                UIColor.orangeColor().setFill()
-                CGContextFillRect(context, rect)
-            }
-            
-        }), range: NSMakeRange(0, combined2.length))
-        let text5 = NSAttributedString(attachment: XLYTextAttachment(string: combined2, lineFragment: 0, insets: UIEdgeInsetsMake(5, 5, 5, 5)))
+        combined2.addAttribute("combined2.background", value: XLYPainter(type: .Background, handler: fillCombinedGlyphRects(.orangeColor())), range: NSMakeRange(0, combined2.length))
+        let text5 = NSAttributedString(attachment: XLYTextAttachment(string: combined2, lineFragment: 0, insets: UIEdgeInsetsMake(5, 5, 5, 5), baselineMode: .TextBaseLine(diff: 0)))
         storage.appendAttributedString(text5)
         
         
-        // for all component in storage, we draw the outline
-        let outline = XLYPainter(type: .Foreground) { (attributeName, context, lineInfo, visualItems) -> Void in
-            UIColor.redColor().setStroke()
-            visualItems.forEach {
-                CGContextStrokeRectWithWidth(context, $0.rect, 1)
-            }
-            if let baseline = visualItems.first?.location.y {
-                UIColor.greenColor().setStroke()
-                CGContextSetLineWidth(context, 1)
-                CGContextMoveToPoint(context, lineInfo.usedRect.minX, baseline)
-                CGContextAddLineToPoint(context, lineInfo.usedRect.maxX, baseline)
-                CGContextDrawPath(context, .Stroke)
-            }
-        }
-        
+        // for all component in storage, we draw the outline and baseline
+        let outline = XLYPainter(type: .Foreground, handler: combinePainters([strokeOutline(.redColor(), lineDashLengths:[2, 2]), strokeBaseline(.greenColor())]))
         storage.addAttribute("outline", value: outline, range: NSMakeRange(0, storage.length))
     }
 

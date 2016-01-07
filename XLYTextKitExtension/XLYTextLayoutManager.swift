@@ -204,7 +204,7 @@ public class XLYTextLayoutManager: NSLayoutManager {
                 .sort { return $0.0.painter.zPosition < $0.1.painter.zPosition }
                 .forEach { (name, items, painter) in
                     let visualItems = items.flatMap { ($0 != nil && $0!.rect.size.isVisible) ? $0 : nil }
-                    let lineInfo = XLYLineVisualInfo(rect: lineRect.offsetBy(dx: origin.x, dy: origin.y), usedRect: usedRect.offsetBy(dx: origin.x, dy: origin.y))
+                    let lineInfo = XLYLineVisualInfo(rect: lineRect.offsetBy(dx: origin.x, dy: origin.y), usedRect: usedRect.offsetBy(dx: origin.x, dy: origin.y), baseline: visualItems.first?.location.y ?? 0)
                     CGContextSaveGState(context)
                     painter.handler(attributeName: name, context: context,
                         lineInfo: lineInfo,
