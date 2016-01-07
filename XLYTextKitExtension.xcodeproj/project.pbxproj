@@ -72,6 +72,7 @@
 		F6FC6DD81C3E756C00FF8DB4 /* XLYTextKitExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextKitExtension.swift; sourceTree = "<group>"; };
 		F6FC6DD91C3E756C00FF8DB4 /* XLYTextLayoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextLayoutManager.swift; sourceTree = "<group>"; };
 		F6FC6DDD1C3E75A600FF8DB4 /* XAutoLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XAutoLayout.framework; sourceTree = "<group>"; };
+		F6FC6DE11C3E773400FF8DB4 /* XLYTextKitExtension.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = XLYTextKitExtension.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +98,7 @@
 		F6F8BA311C3D0749005A7A29 = {
 			isa = PBXGroup;
 			children = (
+				F6FC6DE11C3E773400FF8DB4 /* XLYTextKitExtension.podspec */,
 				F6F8BA3D1C3D0749005A7A29 /* XLYTextKitExtension */,
 				F6FC6DAE1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo */,
 				F6F8BA3C1C3D0749005A7A29 /* Products */,
