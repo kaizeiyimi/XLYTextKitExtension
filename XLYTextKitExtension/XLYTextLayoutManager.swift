@@ -171,14 +171,19 @@ public class XLYTextLayoutManager: NSLayoutManager {
                         let visualItems = self.glyphRangeForCharacterRange(effectiveRange, actualCharacterRange: nil).toRange()!
                             .map { glyphIndex -> XLYVisualItem? in
                                 // invalid
-                                if self.CGGlyphAtIndex(glyphIndex) == 0
+                                var glyph: CGGlyph = 0
+                                if #available(iOS 9, *) {
+                                    glyph =  self.CGGlyphAtIndex(glyphIndex)
+                                } else {
+                                    glyph = self.glyphAtIndex(glyphIndex)
+                                }
+                                if glyph == 0
                                     || !self.boundingRectForGlyphRange(NSMakeRange(glyphIndex, 1), inTextContainer: container).size.isVisible {
                                         return nil
                                 } else {
-                                    var rect: CGRect = CGRectZero, location: CGPoint, glyph: CGGlyph, font: UIFont
+                                    var rect: CGRect = CGRectZero, location: CGPoint, font: UIFont
                                     let attributes = storage.attributesAtIndex(self.characterIndexForGlyphAtIndex(glyphIndex), effectiveRange: nil)
                                     font = attributes[NSFontAttributeName] as! UIFont
-                                    glyph = self.CGGlyphAtIndex(glyphIndex)
                                     let attachmentSize = self.attachmentSizeForGlyphAtIndex(glyphIndex)
                                     if let attachment = attributes[NSAttachmentAttributeName] as? NSTextAttachment
                                         where attachmentSize.isVisible {

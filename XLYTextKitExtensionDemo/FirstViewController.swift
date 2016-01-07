@@ -81,11 +81,5 @@ class FirstViewController: UIViewController {
         storage.addAttribute("outline", value: outline, range: NSMakeRange(0, storage.length))
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
