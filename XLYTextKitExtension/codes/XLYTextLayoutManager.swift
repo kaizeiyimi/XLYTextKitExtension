@@ -68,33 +68,33 @@ public class XLYTextLayoutManager: NSLayoutManager {
     
     // MARK: - adjust attachment views
     public override func processEditingForTextStorage(textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
-        // adjust
-        if delta != 0 {
-            let oldRange = newCharRange.location..<(newCharRange.location + newCharRange.length - delta)
-            var deleteKeys = [AttachViewKey](), adjustKeys = [AttachViewKey]()
-            for key in attachViews.keys {
-                switch key.charIndex {
-                case oldRange:
-                    deleteKeys.append(key)
-                case let index where index >= oldRange.endIndex:
-                    adjustKeys.append(key)
-                default:
-                    break
-                }
-            }
-            deleteKeys.forEach {
-                attachViews[$0]?.removeFromSuperview()
-                attachViews.removeValueForKey($0)
-            }
-            adjustKeys.sortInPlace { return $0.0.charIndex < $0.1.charIndex }
-            adjustKeys.forEach {
-                let view = attachViews[$0]
-                attachViews.removeValueForKey($0)
-                attachViews[AttachViewKey(attachment: $0.attachment, charIndex: $0.charIndex + delta)] = view
+        defer {
+            super.processEditingForTextStorage(textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
+        }
+        // adjust if attachView's index has changed.
+        guard delta != 0 else { return }
+        let oldRange = newCharRange.location..<(newCharRange.location + newCharRange.length - delta)
+        var deleteKeys = [AttachViewKey](), adjustKeys = [AttachViewKey]()
+        for key in attachViews.keys {
+            switch key.charIndex {
+            case oldRange:
+                deleteKeys.append(key)
+            case let index where index >= oldRange.endIndex:
+                adjustKeys.append(key)
+            default:
+                break
             }
         }
-        // call super last
-        super.processEditingForTextStorage(textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
+        deleteKeys.forEach {
+            attachViews[$0]?.removeFromSuperview()
+            attachViews.removeValueForKey($0)
+        }
+        adjustKeys.sortInPlace { $0.0.charIndex < $0.1.charIndex }
+        adjustKeys.forEach {
+            let view = attachViews[$0]
+            attachViews.removeValueForKey($0)
+            attachViews[AttachViewKey(attachment: $0.attachment, charIndex: $0.charIndex + delta)] = view
+        }
     }
     
     override public func drawGlyphsForGlyphRange(glyphsToShow: NSRange, atPoint origin: CGPoint) {
@@ -124,9 +124,11 @@ public class XLYTextLayoutManager: NSLayoutManager {
                     if let view = attachViews[key] {
                         view.frame = rect
                         containerView.addSubview(view)
-                        let selectionViewIndex = containerView.subviews.count - 2
-                        if selectionViewIndex >= 0 {
-                            containerView.bringSubviewToFront(containerView.subviews[selectionViewIndex])
+                        let type: AnyClass? = NSClassFromString("UITextSelectionView")
+                        containerView.subviews.forEach {
+                            if $0.dynamicType.self === type {
+                                containerView.bringSubviewToFront($0)
+                            }
                         }
                         // for inner view
                         if let context = UIGraphicsGetCurrentContext(), innerView = view as? InnerDrawView {
@@ -211,7 +213,9 @@ public class XLYTextLayoutManager: NSLayoutManager {
                     let visualItems = items.flatMap { ($0 != nil && $0!.rect.size.isVisible) ? $0 : nil }
                     let lineInfo = XLYLineVisualInfo(rect: lineRect.offsetBy(dx: origin.x, dy: origin.y), usedRect: usedRect.offsetBy(dx: origin.x, dy: origin.y), baseline: visualItems.first?.location.y ?? 0)
                     CGContextSaveGState(context)
-                    painter.handler(attributeName: name, context: context,
+                    painter.handler(
+                        attributeName: name,
+                        context: context,
                         lineInfo: lineInfo,
                         visualItems: visualItems)
                     CGContextRestoreGState(context)

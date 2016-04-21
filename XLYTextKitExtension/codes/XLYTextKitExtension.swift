@@ -34,6 +34,7 @@ extension UITextView {
         object_setClass(layoutManager, XLYTextLayoutManager.self)
     }
     
+    @IBInspectable
     @objc private var useXLYLayoutManager: Bool {
         get { return false }
         set {
@@ -112,7 +113,7 @@ public class XLYTextAttachment: NSTextAttachment {
         case AttachmentBottom(diff: CGFloat)
     }
     
-    public convenience init(string: NSAttributedString, lineFragment: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero, baselineMode: BaseLineMode = .TextBaseLine(diff: 0)) {
+    public convenience init(string: NSAttributedString, lineFragmentPadding: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero, baselineMode: BaseLineMode = .TextBaseLine(diff: 0)) {
         let storage = NSTextStorage(attributedString: string)
         let length = storage.length
         if length == 0 {
@@ -129,7 +130,7 @@ public class XLYTextAttachment: NSTextAttachment {
             }
             let manager = XLYTextLayoutManager()
             let container = NSTextContainer()
-            container.lineFragmentPadding = lineFragment
+            container.lineFragmentPadding = lineFragmentPadding
             container.size = CGSizeMake(CGFloat.max, CGFloat.max)
             storage.addLayoutManager(manager)
             manager.addTextContainer(container)
@@ -138,7 +139,7 @@ public class XLYTextAttachment: NSTextAttachment {
             let usedSize = manager.usedRectForTextContainer(container).size
             if hasViewAttachment {
                 self.init { () -> UIView in
-                    let view = InnerDrawView(storage: storage, lineFragment: lineFragment, insets: insets)
+                    let view = InnerDrawView(storage: storage, lineFragmentPadding: lineFragmentPadding, insets: insets)
                     view.backgroundColor = .clearColor()
                     return view
                 }
@@ -213,10 +214,10 @@ final class InnerDrawView: UIView {
     let glyphRange: NSRange
     let insets: UIEdgeInsets
     
-    init(storage: NSTextStorage, lineFragment: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero) {
+    init(storage: NSTextStorage, lineFragmentPadding: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero) {
         self.storage.appendAttributedString(storage)
         self.storage.addLayoutManager(manager)
-        self.container.lineFragmentPadding = lineFragment
+        self.container.lineFragmentPadding = lineFragmentPadding
         self.manager.addTextContainer(container)
         self.insets = insets
         self.glyphRange = manager.glyphRangeForCharacterRange(NSMakeRange(0, storage.length), actualCharacterRange: nil)

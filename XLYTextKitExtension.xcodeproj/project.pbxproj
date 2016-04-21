@@ -20,11 +20,9 @@
 		F6FC6DC91C3D130000FF8DB4 /* dog3.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC51C3D130000FF8DB4 /* dog3.png */; };
 		F6FC6DD01C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; };
 		F6FC6DD11C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F6FC6DDA1C3E756C00FF8DB4 /* XLYAidUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DD71C3E756C00FF8DB4 /* XLYAidUtils.swift */; };
+		F6FC6DDA1C3E756C00FF8DB4 /* XLYHelperUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DD71C3E756C00FF8DB4 /* XLYHelperUtils.swift */; };
 		F6FC6DDB1C3E756C00FF8DB4 /* XLYTextKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DD81C3E756C00FF8DB4 /* XLYTextKitExtension.swift */; };
 		F6FC6DDC1C3E756C00FF8DB4 /* XLYTextLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DD91C3E756C00FF8DB4 /* XLYTextLayoutManager.swift */; };
-		F6FC6DDF1C3E75B400FF8DB4 /* XAutoLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6FC6DDD1C3E75A600FF8DB4 /* XAutoLayout.framework */; };
-		F6FC6DE01C3E75B400FF8DB4 /* XAutoLayout.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6FC6DDD1C3E75A600FF8DB4 /* XAutoLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +42,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F6FC6DE01C3E75B400FF8DB4 /* XAutoLayout.framework in Embed Frameworks */,
 				F6FC6DD11C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -68,7 +65,7 @@
 		F6FC6DC31C3D130000FF8DB4 /* dog1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog1.png; sourceTree = "<group>"; };
 		F6FC6DC41C3D130000FF8DB4 /* dog2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog2.png; sourceTree = "<group>"; };
 		F6FC6DC51C3D130000FF8DB4 /* dog3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog3.png; sourceTree = "<group>"; };
-		F6FC6DD71C3E756C00FF8DB4 /* XLYAidUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYAidUtils.swift; sourceTree = "<group>"; };
+		F6FC6DD71C3E756C00FF8DB4 /* XLYHelperUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYHelperUtils.swift; sourceTree = "<group>"; };
 		F6FC6DD81C3E756C00FF8DB4 /* XLYTextKitExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextKitExtension.swift; sourceTree = "<group>"; };
 		F6FC6DD91C3E756C00FF8DB4 /* XLYTextLayoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextLayoutManager.swift; sourceTree = "<group>"; };
 		F6FC6DDD1C3E75A600FF8DB4 /* XAutoLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XAutoLayout.framework; sourceTree = "<group>"; };
@@ -87,7 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6FC6DDF1C3E75B400FF8DB4 /* XAutoLayout.framework in Frameworks */,
 				F6FC6DD01C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,7 +158,7 @@
 		F6FC6DD61C3E756C00FF8DB4 /* codes */ = {
 			isa = PBXGroup;
 			children = (
-				F6FC6DD71C3E756C00FF8DB4 /* XLYAidUtils.swift */,
+				F6FC6DD71C3E756C00FF8DB4 /* XLYHelperUtils.swift */,
 				F6FC6DD81C3E756C00FF8DB4 /* XLYTextKitExtension.swift */,
 				F6FC6DD91C3E756C00FF8DB4 /* XLYTextLayoutManager.swift */,
 			);
@@ -288,7 +284,7 @@
 			files = (
 				F6FC6DDC1C3E756C00FF8DB4 /* XLYTextLayoutManager.swift in Sources */,
 				F6FC6DDB1C3E756C00FF8DB4 /* XLYTextKitExtension.swift in Sources */,
-				F6FC6DDA1C3E756C00FF8DB4 /* XLYAidUtils.swift in Sources */,
+				F6FC6DDA1C3E756C00FF8DB4 /* XLYHelperUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

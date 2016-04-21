@@ -8,7 +8,6 @@
 
 import UIKit
 import XLYTextKitExtension
-import XAutoLayout
 
 
 class FirstViewController: UIViewController {
@@ -25,10 +24,13 @@ class FirstViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(textView)
         
-        xmakeConstraints { () -> Void in
-            textView.xEdge =/ [80, 50, nil, -50]
-            textView.xHeight =/ 200
-        }
+        NSLayoutConstraint.activateConstraints(
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[v]-50-|", options: [], metrics: nil, views: ["v": textView])
+        )
+        NSLayoutConstraint.activateConstraints(
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-80-[v(200)]", options: [], metrics: nil, views: ["v": textView])
+        )
+        
         
         textView.setUseXLYLayoutManager()
         let storage = textView.textStorage
@@ -62,7 +64,10 @@ class FirstViewController: UIViewController {
                 // add a painter for the background
                 "combined1.background": XLYPainter(type: .Background, handler: fillLineUsedRect(UIColor.purpleColor(), cornerFactor: 0.5))
             ])
-        let combined1Attachment = XLYTextAttachment(string: combined1, lineFragment: 10, insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), baselineMode: .LineUsedRectBottom(diff: 0))
+        let combined1Attachment = XLYTextAttachment(string: combined1,
+                                                    lineFragmentPadding: 10,
+                                                    insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
+                                                    baselineMode: .LineUsedRectBottom(diff: 0))
         let text4 = NSMutableAttributedString(attributedString: NSAttributedString(attachment: combined1Attachment))
         // add painter for whole attachment
         text4.addAttributes(["combined1Attachment.background": XLYPainter(type: .Background, handler: fillIndependentGlyphRect(UIColor.orangeColor()))], range: NSMakeRange(0, 1))
@@ -72,7 +77,7 @@ class FirstViewController: UIViewController {
         let combined2 = NSMutableAttributedString(string: "call@", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(16)])
         combined2.appendAttributedString(NSAttributedString(attachment: gifAttachment))
         combined2.addAttribute("combined2.background", value: XLYPainter(type: .Background, handler: fillCombinedGlyphRects(.orangeColor())), range: NSMakeRange(0, combined2.length))
-        let text5 = NSAttributedString(attachment: XLYTextAttachment(string: combined2, lineFragment: 0, insets: UIEdgeInsetsMake(5, 5, 5, 5), baselineMode: .TextBaseLine(diff: 0)))
+        let text5 = NSAttributedString(attachment: XLYTextAttachment(string: combined2, lineFragmentPadding: 0, insets: UIEdgeInsetsMake(5, 5, 5, 5), baselineMode: .TextBaseLine(diff: 0)))
         storage.appendAttributedString(text5)
         
         

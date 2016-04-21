@@ -8,7 +8,6 @@
 
 import UIKit
 import XLYTextKitExtension
-import XAutoLayout
 
 
 class SecondViewController: UIViewController {
@@ -21,10 +20,12 @@ class SecondViewController: UIViewController {
         customView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView)
         
-        xmakeConstraints { () -> Void in
-            customView.xEdge =/ [80, 50, nil, -50]
-            customView.xHeight =/ 200
-        }
+        NSLayoutConstraint.activateConstraints(
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[v]-50-|", options: [], metrics: nil, views: ["v": customView])
+        )
+        NSLayoutConstraint.activateConstraints(
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-80-[v(200)]", options: [], metrics: nil, views: ["v": customView])
+        )
         
         let storage = customView.storage
         
