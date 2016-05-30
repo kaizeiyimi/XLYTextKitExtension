@@ -72,7 +72,6 @@ public class XLYTextLayoutManager: NSLayoutManager {
             super.processEditingForTextStorage(textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
         }
         // adjust if attachView's index has changed.
-        guard delta != 0 else { return }
         let oldRange = newCharRange.location..<(newCharRange.location + newCharRange.length - delta)
         var deleteKeys = [AttachViewKey](), adjustKeys = [AttachViewKey]()
         for key in attachViews.keys {
@@ -89,9 +88,10 @@ public class XLYTextLayoutManager: NSLayoutManager {
             attachViews[$0]?.removeFromSuperview()
             attachViews.removeValueForKey($0)
         }
-        adjustKeys.sortInPlace { $0.0.charIndex < $0.1.charIndex }
+        adjustKeys.sortInPlace { $0.charIndex < $1.charIndex }
         adjustKeys.forEach {
             let view = attachViews[$0]
+            view?.removeFromSuperview()
             attachViews.removeValueForKey($0)
             attachViews[AttachViewKey(attachment: $0.attachment, charIndex: $0.charIndex + delta)] = view
         }
