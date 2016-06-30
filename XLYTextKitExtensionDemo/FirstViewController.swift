@@ -28,7 +28,7 @@ class FirstViewController: UIViewController {
             NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[v]-50-|", options: [], metrics: nil, views: ["v": textView])
         )
         NSLayoutConstraint.activateConstraints(
-            NSLayoutConstraint.constraintsWithVisualFormat("V:|-80-[v(200)]", options: [], metrics: nil, views: ["v": textView])
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-80-[v(150)]", options: [], metrics: nil, views: ["v": textView])
         )
         
         
@@ -67,7 +67,9 @@ class FirstViewController: UIViewController {
         let combined1Attachment = XLYTextAttachment(string: combined1,
                                                     lineFragmentPadding: 10,
                                                     insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
-                                                    baselineMode: .LineUsedRectBottom(diff: 0))
+                                                    baselineMode: .LineUsedRectBottom(diff: 0)) { value in
+                                                        print("it works! \(value.string)")
+            }
         let text4 = NSMutableAttributedString(attributedString: NSAttributedString(attachment: combined1Attachment))
         // add painter for whole attachment
         text4.addAttributes(["combined1Attachment.background": XLYPainter(type: .Background, handler: fillIndependentGlyphRect(UIColor.orangeColor()))], range: NSMakeRange(0, 1))

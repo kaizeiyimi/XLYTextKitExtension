@@ -113,19 +113,21 @@ public class XLYTextAttachment: NSTextAttachment {
         case AttachmentBottom(diff: CGFloat)
     }
     
-    public convenience init(string: NSAttributedString, lineFragmentPadding: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero, baselineMode: BaseLineMode = .TextBaseLine(diff: 0)) {
+    public convenience init(string: NSAttributedString, lineFragmentPadding: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero, baselineMode: BaseLineMode = .TextBaseLine(diff: 0), clickAction: (NSAttributedString -> Void)? = nil) {
         let storage = NSTextStorage(attributedString: string)
         let length = storage.length
         if length == 0 {
             self.init()
             stringBounds = CGRectZero
         } else {
-            var hasViewAttachment = false
-            for index in 0..<length {
-                if let attachment = storage.attribute(NSAttachmentAttributeName, atIndex: index, effectiveRange: nil) as? XLYTextAttachment
-                    where attachment.viewGenerator != nil {
-                        hasViewAttachment = true
+            var shouldUseInnerView = clickAction != nil
+            if !shouldUseInnerView {
+                for index in 0..<length {
+                    if let attachment = storage.attribute(NSAttachmentAttributeName, atIndex: index, effectiveRange: nil) as? XLYTextAttachment
+                        where attachment.viewGenerator != nil {
+                        shouldUseInnerView = true
                         break
+                    }
                 }
             }
             let manager = XLYTextLayoutManager()
@@ -137,10 +139,9 @@ public class XLYTextAttachment: NSTextAttachment {
             manager.ensureLayoutForTextContainer(container)
             let y = manager.locationForGlyphAtIndex(0).y
             let usedSize = manager.usedRectForTextContainer(container).size
-            if hasViewAttachment {
+            if shouldUseInnerView {
                 self.init { () -> UIView in
-                    let view = InnerDrawView(storage: storage, lineFragmentPadding: lineFragmentPadding, insets: insets)
-                    view.backgroundColor = .clearColor()
+                    let view = InnerDrawView(storage: storage, lineFragmentPadding: lineFragmentPadding, insets: insets, clickAction: clickAction)
                     return view
                 }
             } else {
@@ -214,18 +215,38 @@ final class InnerDrawView: UIView {
     let glyphRange: NSRange
     let insets: UIEdgeInsets
     
-    init(storage: NSTextStorage, lineFragmentPadding: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsetsZero) {
+    let clickAction: (NSAttributedString -> Void)?
+    
+    override var backgroundColor: UIColor? {
+        didSet {
+            print(backgroundColor)
+        }
+    }
+    
+    init(storage: NSTextStorage,
+         lineFragmentPadding: CGFloat = 0,
+         insets: UIEdgeInsets = UIEdgeInsetsZero,
+         clickAction: (NSAttributedString -> Void)? = nil) {
         self.storage.appendAttributedString(storage)
         self.storage.addLayoutManager(manager)
         self.container.lineFragmentPadding = lineFragmentPadding
         self.manager.addTextContainer(container)
         self.insets = insets
         self.glyphRange = manager.glyphRangeForCharacterRange(NSMakeRange(0, storage.length), actualCharacterRange: nil)
+        self.clickAction = clickAction
         super.init(frame: CGRectZero)
+        backgroundColor = UIColor.clearColor()
+        if clickAction != nil {
+            addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onTap(_:))))
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func onTap(_: AnyObject) {
+        clickAction?(storage)
     }
     
     func draw(context: CGContext, view: UIView) {
@@ -238,4 +259,5 @@ final class InnerDrawView: UIView {
             $0.frame = $0.frame.offsetBy(dx: -self.frame.origin.x, dy: -self.frame.origin.y)
         }
     }
+    
 }
