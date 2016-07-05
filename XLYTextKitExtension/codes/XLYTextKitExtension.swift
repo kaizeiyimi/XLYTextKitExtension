@@ -217,12 +217,6 @@ final class InnerDrawView: UIView {
     
     let clickAction: (NSAttributedString -> Void)?
     
-    override var backgroundColor: UIColor? {
-        didSet {
-            print(backgroundColor)
-        }
-    }
-    
     init(storage: NSTextStorage,
          lineFragmentPadding: CGFloat = 0,
          insets: UIEdgeInsets = UIEdgeInsetsZero,
