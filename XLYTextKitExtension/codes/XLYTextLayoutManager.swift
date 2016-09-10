@@ -51,18 +51,18 @@ open class XLYTextLayoutManager: NSLayoutManager {
     }
     
     //
-    func attachView(_ attachment: XLYTextAttachment, charIndex: Int) -> UIView? {
+    func attachView(for attachment: XLYTextAttachment, charIndex: Int) -> UIView? {
         return attachViews[AttachViewKey(attachment: attachment, charIndex: charIndex)]
     }
     
-    func addAttachViewForAttachmentIfNeed(_ attachment: XLYTextAttachment, charIndex: Int) {
+    func addAttachViewIfNeed(for attachment: XLYTextAttachment, charIndex: Int) {
         let key = AttachViewKey(attachment: attachment, charIndex: charIndex)
         if let viewGenerator = attachment.viewGenerator , attachViews[key] == nil {
             attachViews[key] = viewGenerator()
         }
     }
     
-    func allAttachView() -> [UIView] {
+    func allAttachViews() -> [UIView] {
         return attachViews.map { $0.1 }
     }
     
@@ -97,7 +97,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
         }
     }
     
-    override open func drawGlyphs(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+    open override func drawGlyphs(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawGlyphs(forGlyphRange: glyphsToShow, at: origin)
         for glyphIndex in glyphsToShow.location..<(glyphsToShow.location + glyphsToShow.length) {
             let charIndex = characterIndexForGlyph(at: glyphIndex)
@@ -132,7 +132,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
                         }
                         // for inner view
                         if let context = UIGraphicsGetCurrentContext(), let innerView = view as? InnerDrawView {
-                            innerView.draw(context, view: containerView)
+                            innerView.draw(in: context)
                         }
                     }
                 } else {
@@ -142,28 +142,28 @@ open class XLYTextLayoutManager: NSLayoutManager {
                 attachViews[key]?.removeFromSuperview()
             }
         }
-        makePaintersDraw(.foreground, glyphsToShow: glyphsToShow, atPoint: origin)
+        makePaintersDraw(at: origin, type: .foreground, glyphsToShow: glyphsToShow)
     }
     
     
     // MARK: - mainly for backgroundDraw
     open override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
-        makePaintersDraw(.background, glyphsToShow: glyphsToShow, atPoint: origin)
+        makePaintersDraw(at: origin, type: .background, glyphsToShow: glyphsToShow)
     }
     
     // MARK: - painter
-    private func makePaintersDraw(_ painterType: XLYPainter.PainterType, glyphsToShow: NSRange, atPoint origin: CGPoint) {
+    private func makePaintersDraw(at origin: CGPoint, type: XLYPainter.PainterType, glyphsToShow range: NSRange) {
         guard let context = UIGraphicsGetCurrentContext(), let storage = textStorage else { return }
         typealias Item = (name: String, visualItems: [XLYVisualItem?], painter: XLYPainter)
 
-        enumerateLineFragments(forGlyphRange: glyphsToShow) { (lineRect, usedRect, container, glyphRange, _) -> Void in
+        enumerateLineFragments(forGlyphRange: range) { (lineRect, usedRect, container, glyphRange, _) -> Void in
             let charRange = self.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
             let lineString = NSMutableAttributedString(attributedString: storage.attributedSubstring(from: charRange))
             
             (0..<charRange.length).map { lineCharIndex -> [Item] in
                 return lineString.attributes(at: lineCharIndex, effectiveRange: nil)
-                    .filter { ($1 is XLYPainter) && ($1 as! XLYPainter).type == painterType }
+                    .filter { ($1 is XLYPainter) && ($1 as! XLYPainter).type == type }
                     .map { (name, _) -> Item in
                         var effectiveRange = NSRange()
                         let painter = lineString.attribute(name, at: lineCharIndex, longestEffectiveRange: &effectiveRange, in: NSMakeRange(0, charRange.length)) as! XLYPainter

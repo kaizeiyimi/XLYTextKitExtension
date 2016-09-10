@@ -75,7 +75,7 @@ open class XLYTextAttachment: NSTextAttachment {
     let viewGenerator: (() -> UIView)?
     let painter: ((_ context: CGContext, _ rect: CGRect) -> Void)?
     
-    private var stringBounds: CGRect?
+    private let stringBounds: CGRect?
     
     open var canCustom: Bool {
         return image == nil && contents == nil && fileWrapper == nil
@@ -83,7 +83,8 @@ open class XLYTextAttachment: NSTextAttachment {
     
     public init(bounds: CGRect = CGRect.zero, viewGenerator: @escaping (() -> UIView)) {
         self.viewGenerator = viewGenerator
-        painter = nil
+        self.painter = nil
+        self.stringBounds = nil
         super.init(data: nil, ofType: nil)
         self.bounds = bounds
     }
@@ -91,6 +92,7 @@ open class XLYTextAttachment: NSTextAttachment {
     public init(bounds: CGRect = CGRect.zero, painter: @escaping (_ context: CGContext, _ rect: CGRect) -> Void) {
         self.viewGenerator = nil
         self.painter = painter
+        self.stringBounds = nil
         super.init(data: nil, ofType: nil)
         self.bounds = bounds
     }
@@ -101,12 +103,13 @@ open class XLYTextAttachment: NSTextAttachment {
         case attachmentBottom(diff: CGFloat)
     }
     
-    public convenience init(string: NSAttributedString, lineFragmentPadding: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsets.zero, baselineMode: BaseLineMode = .textBaseLine(diff: 0), clickAction: ((NSAttributedString) -> Void)? = nil) {
+    public init(string: NSAttributedString, lineFragmentPadding: CGFloat = 0, insets: UIEdgeInsets = UIEdgeInsets.zero, baselineMode: BaseLineMode = .textBaseLine(diff: 0), clickAction: ((NSAttributedString) -> Void)? = nil) {
         let storage = NSTextStorage(attributedString: string)
         let length = storage.length
         if length == 0 {
-            self.init()
-            stringBounds = CGRect.zero
+            self.viewGenerator = nil
+            self.painter = nil
+            self.stringBounds = CGRect.zero
         } else {
             var shouldUseInnerView = clickAction != nil
             if !shouldUseInnerView {
@@ -128,19 +131,21 @@ open class XLYTextAttachment: NSTextAttachment {
             let y = manager.location(forGlyphAt: 0).y
             let usedSize = manager.usedRect(for: container).size
             if shouldUseInnerView {
-                self.init { () -> UIView in
+                self.viewGenerator = { () -> UIView in
                     let view = InnerDrawView(storage: storage, lineFragmentPadding: lineFragmentPadding, insets: insets, clickAction: clickAction)
                     return view
                 }
+                self.painter = nil
             } else {
+                self.viewGenerator = nil
                 let glyphRange = manager.glyphRange(forCharacterRange: NSMakeRange(0, length), actualCharacterRange: nil)
-                self.init(painter: { (context, rect) -> Void in
+                self.painter = { (context, rect) -> Void in
                     let _ = storage
                     let origin = CGPoint(x: rect.minX + insets.left, y: rect.minY + insets.top)
                     container.size = UIEdgeInsetsInsetRect(rect, insets).size
                     manager.drawBackground(forGlyphRange: glyphRange, at: origin)
                     manager.drawGlyphs(forGlyphRange: glyphRange, at: origin)
-                })
+                }
             }
 
             var boundsY: CGFloat
@@ -154,25 +159,36 @@ open class XLYTextAttachment: NSTextAttachment {
             }
             stringBounds = CGRect(x: 0, y: boundsY, width: insets.left + usedSize.width + insets.right, height: insets.top + usedSize.height + insets.bottom)
         }
-    }
-    
-    public init() {
-        viewGenerator = nil
-        painter = nil
+        
         super.init(data: nil, ofType: nil)
     }
     
+    public init() {
+        self.viewGenerator = nil
+        self.painter = nil
+        self.stringBounds = nil
+        super.init(data: nil, ofType: nil)
+    }
+    
+    override init(data contentData: Data?, ofType uti: String?) {
+        self.viewGenerator = nil
+        self.painter = nil
+        self.stringBounds = nil
+        super.init(data: contentData, ofType: uti)
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
-        viewGenerator = nil
-        painter = nil
+        self.viewGenerator = nil
+        self.painter = nil
+        self.stringBounds = nil
         super.init(coder: aDecoder)
     }
     
     override open func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
         if canCustom && viewGenerator != nil {
             if let manager = textContainer?.layoutManager as? XLYTextLayoutManager {
-                manager.addAttachViewForAttachmentIfNeed(self, charIndex: charIndex)
-                if let v = manager.attachView(self, charIndex: charIndex) {
+                manager.addAttachViewIfNeed(for: self, charIndex: charIndex)
+                if let v = manager.attachView(for: self, charIndex: charIndex) {
                     if bounds.size.equalTo(CGSize.zero) {
                         v.sizeToFit()
                         return CGRect(origin: bounds.origin, size: v.frame.size)
@@ -231,13 +247,13 @@ final class InnerDrawView: UIView {
         clickAction?(storage)
     }
     
-    func draw(_ context: CGContext, view: UIView) {
+    func draw(in context: CGContext) {
         container.size = UIEdgeInsetsInsetRect(frame, insets).size
         let origin = CGPoint(x: frame.minX + insets.left, y: frame.minY + insets.top)
         container.associatedView = self
         manager.drawBackground(forGlyphRange: glyphRange, at: origin)
         manager.drawGlyphs(forGlyphRange: glyphRange, at: origin)
-        manager.allAttachView().forEach {
+        manager.allAttachViews().forEach {
             $0.frame = $0.frame.offsetBy(dx: -self.frame.origin.x, dy: -self.frame.origin.y)
         }
     }

@@ -62,7 +62,7 @@ class FirstViewController: UIViewController {
             attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16),
                 NSForegroundColorAttributeName: UIColor.orange,
                 // add a painter for the background
-                "combined1.background": XLYPainter(type: .background, handler: fillLineUsedRect(UIColor.purple, cornerFactor: 0.5))
+                "combined1.background": XLYPainter(type: .background, handler: fillLineUsedRect(color: UIColor.purple, cornerFactor: 0.5))
             ])
         let combined1Attachment = XLYTextAttachment(string: combined1,
                                                     lineFragmentPadding: 10,
@@ -72,19 +72,19 @@ class FirstViewController: UIViewController {
             }
         let text4 = NSMutableAttributedString(attributedString: NSAttributedString(attachment: combined1Attachment))
         // add painter for whole attachment
-        text4.addAttributes(["combined1Attachment.background": XLYPainter(type: .background, handler: fillIndependentGlyphRect(UIColor.orange))], range: NSMakeRange(0, 1))
+        text4.addAttributes(["combined1Attachment.background": XLYPainter(type: .background, handler: fillIndependentGlyphRect(color: UIColor.orange))], range: NSMakeRange(0, 1))
         storage.append(text4)
         
         // combined text with view
         let combined2 = NSMutableAttributedString(string: "call@", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)])
         combined2.append(NSAttributedString(attachment: gifAttachment))
-        combined2.addAttribute("combined2.background", value: XLYPainter(type: .background, handler: fillCombinedGlyphRects(.orange)), range: NSMakeRange(0, combined2.length))
+        combined2.addAttribute("combined2.background", value: XLYPainter(type: .background, handler: fillCombinedGlyphRects(color: .orange)), range: NSMakeRange(0, combined2.length))
         let text5 = NSAttributedString(attachment: XLYTextAttachment(string: combined2, lineFragmentPadding: 0, insets: UIEdgeInsetsMake(5, 5, 5, 5), baselineMode: .textBaseLine(diff: 0)))
         storage.append(text5)
         
         
         // for all component in storage, we draw the outline and baseline
-        let outline = XLYPainter(type: .foreground, handler: combinePainters([strokeOutline(.red, lineDashLengths:[2, 2]), strokeBaseline(.green)]))
+        let outline = XLYPainter(type: .foreground, handler: combinePainters([strokeOutline(color: .red, lineDashLengths:[2, 2]), strokeBaseline(color: .green)]))
         storage.addAttribute("outline", value: outline, range: NSMakeRange(0, storage.length))
     }
 

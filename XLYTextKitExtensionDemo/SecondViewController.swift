@@ -48,7 +48,7 @@ class SecondViewController: UIViewController {
         storage.append(text2)
         
         // for all component in storage, we draw the outline and baseline
-        let outline = XLYPainter(type: .foreground, handler: combinePainters([strokeLineUsedRect(.red, lineDashLengths:[2, 2]), strokeBaseline(.green)]))
+        let outline = XLYPainter(type: .foreground, handler: combinePainters([strokeLineUsedRect(color: .red, lineDashLengths:[2, 2]), strokeBaseline(color: .green)]))
         storage.addAttribute("outline", value: outline, range: NSMakeRange(0, storage.length))
     }
 
