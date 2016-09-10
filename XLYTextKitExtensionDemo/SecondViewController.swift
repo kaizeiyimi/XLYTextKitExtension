@@ -16,48 +16,48 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
         let customView = CustomView()
         customView.contentInsets = UIEdgeInsetsMake(30, 30, 30, 30)
-        customView.backgroundColor = UIColor.lightGrayColor()
+        customView.backgroundColor = UIColor.lightGray
         customView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView)
         
-        NSLayoutConstraint.activateConstraints(
-            NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[v]-50-|", options: [], metrics: nil, views: ["v": customView])
+        NSLayoutConstraint.activate(
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-50-[v]-50-|", options: [], metrics: nil, views: ["v": customView])
         )
-        NSLayoutConstraint.activateConstraints(
-            NSLayoutConstraint.constraintsWithVisualFormat("V:|-80-[v(200)]", options: [], metrics: nil, views: ["v": customView])
+        NSLayoutConstraint.activate(
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-80-[v(200)]", options: [], metrics: nil, views: ["v": customView])
         )
         
         let storage = customView.storage
         
         // normal text
-        let text1 = NSAttributedString(string: "normal + ", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(14)])
-        storage.appendAttributedString(text1)
+        let text1 = NSAttributedString(string: "normal + ", attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 14)])
+        storage.append(text1)
         
         // view attachment
         let images = (0...3).map{ UIImage(named: "dog\($0)")! }
         let gifAttachment = XLYTextAttachment { () -> UIView in
             let animatedImageView = UIImageView()
-            animatedImageView.backgroundColor = .purpleColor()
+            animatedImageView.backgroundColor = .purple
             animatedImageView.animationImages = images
             animatedImageView.animationDuration = 0.6
             animatedImageView.startAnimating()
             return animatedImageView
         }
-        gifAttachment.bounds = CGRectMake(0, 0, 50, 50)
+        gifAttachment.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
         let text2 = NSAttributedString(attachment: gifAttachment)
-        storage.appendAttributedString(text2)
+        storage.append(text2)
         
         // for all component in storage, we draw the outline and baseline
-        let outline = XLYPainter(type: .Foreground, handler: combinePainters([strokeLineUsedRect(.redColor(), lineDashLengths:[2, 2]), strokeBaseline(.greenColor())]))
+        let outline = XLYPainter(type: .foreground, handler: combinePainters([strokeLineUsedRect(.red, lineDashLengths:[2, 2]), strokeBaseline(.green)]))
         storage.addAttribute("outline", value: outline, range: NSMakeRange(0, storage.length))
     }
 
 }
 
 // just an example. can be much more complicated.
-public class CustomView: UIView {
-    public let storage = NSTextStorage()
-    public var contentInsets = UIEdgeInsetsZero
+open class CustomView: UIView {
+    open let storage = NSTextStorage()
+    open var contentInsets = UIEdgeInsets.zero
     
     let layoutManager = XLYTextLayoutManager()
     let container = NSTextContainer()
@@ -76,11 +76,11 @@ public class CustomView: UIView {
         container.associatedView = self
     }
     
-    public override func drawRect(rect: CGRect) {
+    open override func draw(_ rect: CGRect) {
         container.size = UIEdgeInsetsInsetRect(rect, contentInsets).size
-        let origin = CGPointMake(contentInsets.left, contentInsets.top)
-        let glyphRange = layoutManager.glyphRangeForCharacterRange(NSMakeRange(0, storage.length), actualCharacterRange: nil)
-        layoutManager.drawBackgroundForGlyphRange(glyphRange, atPoint: origin)
-        layoutManager.drawGlyphsForGlyphRange(glyphRange, atPoint: origin)
+        let origin = CGPoint(x: contentInsets.left, y: contentInsets.top)
+        let glyphRange = layoutManager.glyphRange(forCharacterRange: NSMakeRange(0, storage.length), actualCharacterRange: nil)
+        layoutManager.drawBackground(forGlyphRange: glyphRange, at: origin)
+        layoutManager.drawGlyphs(forGlyphRange: glyphRange, at: origin)
     }
 }

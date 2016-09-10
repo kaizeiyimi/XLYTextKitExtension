@@ -8,7 +8,7 @@
 import Foundation
 
 extension CGSize {
-    private var isVisible: Bool {
+    fileprivate var isVisible: Bool {
         return width > 0 && height > 0
     }
 }
@@ -30,13 +30,13 @@ private final class AttachViewKey: Hashable {
     }
     
     var hashValue: Int {
-        return "\(unsafeAddressOf(attachment))+\(charIndex)".hashValue
+        return "\(Unmanaged.passUnretained(attachment).toOpaque())+\(charIndex)".hashValue
     }
 }
 
 
 // MARK: - XLYTextLayoutManager
-public class XLYTextLayoutManager: NSLayoutManager {
+open class XLYTextLayoutManager: NSLayoutManager {
     
     private var attachViews: [AttachViewKey: UIView] {
         get {
@@ -51,13 +51,13 @@ public class XLYTextLayoutManager: NSLayoutManager {
     }
     
     //
-    func attachView(attachment: XLYTextAttachment, charIndex: Int) -> UIView? {
+    func attachView(_ attachment: XLYTextAttachment, charIndex: Int) -> UIView? {
         return attachViews[AttachViewKey(attachment: attachment, charIndex: charIndex)]
     }
     
-    func addAttachViewForAttachmentIfNeed(attachment: XLYTextAttachment, charIndex: Int) {
+    func addAttachViewForAttachmentIfNeed(_ attachment: XLYTextAttachment, charIndex: Int) {
         let key = AttachViewKey(attachment: attachment, charIndex: charIndex)
-        if let viewGenerator = attachment.viewGenerator where attachViews[key] == nil {
+        if let viewGenerator = attachment.viewGenerator , attachViews[key] == nil {
             attachViews[key] = viewGenerator()
         }
     }
@@ -67,9 +67,9 @@ public class XLYTextLayoutManager: NSLayoutManager {
     }
     
     // MARK: - adjust attachment views
-    public override func processEditingForTextStorage(textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
+    open override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
         defer {
-            super.processEditingForTextStorage(textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
+            super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
         }
         // adjust if attachView's index has changed.
         let oldRange = newCharRange.location..<(newCharRange.location + newCharRange.length - delta)
@@ -86,39 +86,39 @@ public class XLYTextLayoutManager: NSLayoutManager {
         }
         deleteKeys.forEach {
             attachViews[$0]?.removeFromSuperview()
-            attachViews.removeValueForKey($0)
+            attachViews.removeValue(forKey: $0)
         }
-        adjustKeys.sortInPlace { $0.charIndex < $1.charIndex }
+        adjustKeys.sort { $0.charIndex < $1.charIndex }
         adjustKeys.forEach {
             let view = attachViews[$0]
             view?.removeFromSuperview()
-            attachViews.removeValueForKey($0)
+            attachViews.removeValue(forKey: $0)
             attachViews[AttachViewKey(attachment: $0.attachment, charIndex: $0.charIndex + delta)] = view
         }
     }
     
-    override public func drawGlyphsForGlyphRange(glyphsToShow: NSRange, atPoint origin: CGPoint) {
-        super.drawGlyphsForGlyphRange(glyphsToShow, atPoint: origin)
+    override open func drawGlyphs(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+        super.drawGlyphs(forGlyphRange: glyphsToShow, at: origin)
         for glyphIndex in glyphsToShow.location..<(glyphsToShow.location + glyphsToShow.length) {
-            let charIndex = characterIndexForGlyphAtIndex(glyphIndex)
+            let charIndex = characterIndexForGlyph(at: glyphIndex)
             
-            guard let attachment = textStorage?.attribute(NSAttachmentAttributeName, atIndex: charIndex, effectiveRange: nil) as? XLYTextAttachment else { continue }
+            guard let attachment = textStorage?.attribute(NSAttachmentAttributeName, at: charIndex, effectiveRange: nil) as? XLYTextAttachment else { continue }
             
             let key = AttachViewKey(attachment: attachment, charIndex: charIndex)
-            let size = attachmentSizeForGlyphAtIndex(glyphIndex)
+            let size = attachmentSize(forGlyphAt: glyphIndex)
             if attachment.canCustom && size.isVisible {
-                var point = locationForGlyphAtIndex(glyphIndex)
-                let lineRect = lineFragmentRectForGlyphAtIndex(glyphIndex, effectiveRange: nil)
+                var point = location(forGlyphAt: glyphIndex)
+                let lineRect = lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: nil)
                 point.x += origin.x + lineRect.origin.x
                 point.y = origin.y + lineRect.minY + point.y - size.height
                 let rect = CGRect(origin: point, size: size)
-                if let painter = attachment.painter, context = UIGraphicsGetCurrentContext() {
-                    CGContextSaveGState(context)
-                    painter(context: context, rect: rect)
-                    CGContextRestoreGState(context)
+                if let painter = attachment.painter, let context = UIGraphicsGetCurrentContext() {
+                    context.saveGState()
+                    painter(context, rect)
+                    context.restoreGState()
                     attachViews[key]?.removeFromSuperview()
-                } else if let containerView = textContainerForGlyphAtIndex(glyphIndex, effectiveRange: nil)?.associatedView {
-                    if let viewGenerator = attachment.viewGenerator where attachViews[key] == nil {
+                } else if let containerView = textContainer(forGlyphAt: glyphIndex, effectiveRange: nil)?.associatedView {
+                    if let viewGenerator = attachment.viewGenerator , attachViews[key] == nil {
                         attachViews[key] = viewGenerator()
                     }
                     if let view = attachViews[key] {
@@ -126,12 +126,12 @@ public class XLYTextLayoutManager: NSLayoutManager {
                         containerView.addSubview(view)
                         let type: AnyClass? = NSClassFromString("UITextSelectionView")
                         containerView.subviews.forEach {
-                            if $0.dynamicType.self === type {
-                                containerView.bringSubviewToFront($0)
+                            if type(of: $0).self === type {
+                                containerView.bringSubview(toFront: $0)
                             }
                         }
                         // for inner view
-                        if let context = UIGraphicsGetCurrentContext(), innerView = view as? InnerDrawView {
+                        if let context = UIGraphicsGetCurrentContext(), let innerView = view as? InnerDrawView {
                             innerView.draw(context, view: containerView)
                         }
                     }
@@ -142,60 +142,61 @@ public class XLYTextLayoutManager: NSLayoutManager {
                 attachViews[key]?.removeFromSuperview()
             }
         }
-        makePaintersDraw(.Foreground, glyphsToShow: glyphsToShow, atPoint: origin)
+        makePaintersDraw(.foreground, glyphsToShow: glyphsToShow, atPoint: origin)
     }
     
     
     // MARK: - mainly for backgroundDraw
-    public override func drawBackgroundForGlyphRange(glyphsToShow: NSRange, atPoint origin: CGPoint) {
-        super.drawBackgroundForGlyphRange(glyphsToShow, atPoint: origin)
-        makePaintersDraw(.Background, glyphsToShow: glyphsToShow, atPoint: origin)
+    open override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+        super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
+        makePaintersDraw(.background, glyphsToShow: glyphsToShow, atPoint: origin)
     }
     
     // MARK: - painter
-    private func makePaintersDraw(painterType: XLYPainter.PainterType, glyphsToShow: NSRange, atPoint origin: CGPoint) {
-        guard let context = UIGraphicsGetCurrentContext(), storage = textStorage else { return }
+    private func makePaintersDraw(_ painterType: XLYPainter.PainterType, glyphsToShow: NSRange, atPoint origin: CGPoint) {
+        guard let context = UIGraphicsGetCurrentContext(), let storage = textStorage else { return }
         typealias Item = (name: String, visualItems: [XLYVisualItem?], painter: XLYPainter)
 
-        enumerateLineFragmentsForGlyphRange(glyphsToShow) { (lineRect, usedRect, container, glyphRange, _) -> Void in
-            let charRange = self.characterRangeForGlyphRange(glyphRange, actualGlyphRange: nil)
-            let lineString = NSMutableAttributedString(attributedString: storage.attributedSubstringFromRange(charRange))
+        enumerateLineFragments(forGlyphRange: glyphsToShow) { (lineRect, usedRect, container, glyphRange, _) -> Void in
+            let charRange = self.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
+            let lineString = NSMutableAttributedString(attributedString: storage.attributedSubstring(from: charRange))
             
             (0..<charRange.length).map { lineCharIndex -> [Item] in
-                return lineString.attributesAtIndex(lineCharIndex, effectiveRange: nil)
+                return lineString.attributes(at: lineCharIndex, effectiveRange: nil)
                     .filter { ($1 is XLYPainter) && ($1 as! XLYPainter).type == painterType }
                     .map { (name, _) -> Item in
                         var effectiveRange = NSRange()
-                        let painter = lineString.attribute(name, atIndex: lineCharIndex, longestEffectiveRange: &effectiveRange, inRange: NSMakeRange(0, charRange.length)) as! XLYPainter
+                        let painter = lineString.attribute(name, at: lineCharIndex, longestEffectiveRange: &effectiveRange, in: NSMakeRange(0, charRange.length)) as! XLYPainter
                         lineString.removeAttribute(name, range: effectiveRange)
                         
                         effectiveRange.location += charRange.location
-                        let visualItems = self.glyphRangeForCharacterRange(effectiveRange, actualCharacterRange: nil).toRange()!
+                        let range = self.glyphRange(forCharacterRange: effectiveRange, actualCharacterRange: nil)
+                        let visualItems = (range.location..<range.location + range.length)
                             .map { glyphIndex -> XLYVisualItem? in
                                 // invalid
                                 var glyph: CGGlyph = 0
                                 if #available(iOS 9, *) {
-                                    glyph =  self.CGGlyphAtIndex(glyphIndex)
+                                    glyph =  self.cgGlyph(at: glyphIndex)
                                 } else {
-                                    glyph = self.glyphAtIndex(glyphIndex)
+                                    glyph = self.glyph(at: glyphIndex)
                                 }
                                 if glyph == 0
-                                    || !self.boundingRectForGlyphRange(NSMakeRange(glyphIndex, 1), inTextContainer: container).size.isVisible {
+                                    || !self.boundingRect(forGlyphRange: NSMakeRange(glyphIndex, 1), in: container).size.isVisible {
                                         return nil
                                 } else {
-                                    var rect: CGRect = CGRectZero, location: CGPoint, font: UIFont
-                                    let attributes = storage.attributesAtIndex(self.characterIndexForGlyphAtIndex(glyphIndex), effectiveRange: nil)
+                                    var rect: CGRect = CGRect.zero, location: CGPoint, font: UIFont
+                                    let attributes = storage.attributes(at: self.characterIndexForGlyph(at: glyphIndex), effectiveRange: nil)
                                     font = attributes[NSFontAttributeName] as! UIFont
-                                    let attachmentSize = self.attachmentSizeForGlyphAtIndex(glyphIndex)
+                                    let attachmentSize = self.attachmentSize(forGlyphAt: glyphIndex)
                                     if let attachment = attributes[NSAttachmentAttributeName] as? NSTextAttachment
-                                        where attachmentSize.isVisible {
+                                        , attachmentSize.isVisible {
                                             let y = attachment.bounds.origin.y
-                                            location = self.locationForGlyphAtIndex(glyphIndex)
+                                            location = self.location(forGlyphAt: glyphIndex)
                                             location.y += y
-                                            rect = CGRect(origin: CGPointMake(0, y), size: attachmentSize)
+                                            rect = CGRect(origin: CGPoint(x: 0, y: y), size: attachmentSize)
                                     } else {
-                                        CTFontGetBoundingRectsForGlyphs(font, .Default, &glyph, &rect, 1)
-                                        location = self.locationForGlyphAtIndex(glyphIndex)
+                                        CTFontGetBoundingRectsForGlyphs(font, .default, &glyph, &rect, 1)
+                                        location = self.location(forGlyphAt: glyphIndex)
                                     }
                                     
                                     location.x += origin.x
@@ -208,17 +209,17 @@ public class XLYTextLayoutManager: NSLayoutManager {
                         return (name: name, visualItems: visualItems, painter: painter)
                 }
                 }.flatMap { $0 }
-                .sort { return $0.0.painter.zPosition < $0.1.painter.zPosition }
+                .sorted { return $0.0.painter.zPosition < $0.1.painter.zPosition }
                 .forEach { (name, items, painter) in
                     let visualItems = items.flatMap { ($0 != nil && $0!.rect.size.isVisible) ? $0 : nil }
                     let lineInfo = XLYLineVisualInfo(rect: lineRect.offsetBy(dx: origin.x, dy: origin.y), usedRect: usedRect.offsetBy(dx: origin.x, dy: origin.y), baseline: visualItems.first?.location.y ?? 0)
-                    CGContextSaveGState(context)
+                    context.saveGState()
                     painter.handler(
-                        attributeName: name,
-                        context: context,
-                        lineInfo: lineInfo,
-                        visualItems: visualItems)
-                    CGContextRestoreGState(context)
+                        name,
+                        context,
+                        lineInfo,
+                        visualItems)
+                    context.restoreGState()
             }
         }
     }

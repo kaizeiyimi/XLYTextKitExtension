@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6C0CF751D83D3F700701C06 /* XLYTextKitExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; };
+		F6C0CF761D83D3F700701C06 /* XLYTextKitExtension.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F6F8BA3F1C3D0749005A7A29 /* XLYTextKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F8BA3E1C3D0749005A7A29 /* XLYTextKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6FC6DB01C3D12B200FF8DB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DAF1C3D12B200FF8DB4 /* AppDelegate.swift */; };
 		F6FC6DB21C3D12B200FF8DB4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DB11C3D12B200FF8DB4 /* FirstViewController.swift */; };
@@ -18,15 +20,13 @@
 		F6FC6DC71C3D130000FF8DB4 /* dog1.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC31C3D130000FF8DB4 /* dog1.png */; };
 		F6FC6DC81C3D130000FF8DB4 /* dog2.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC41C3D130000FF8DB4 /* dog2.png */; };
 		F6FC6DC91C3D130000FF8DB4 /* dog3.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FC6DC51C3D130000FF8DB4 /* dog3.png */; };
-		F6FC6DD01C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; };
-		F6FC6DD11C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F6FC6DDA1C3E756C00FF8DB4 /* XLYHelperUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DD71C3E756C00FF8DB4 /* XLYHelperUtils.swift */; };
 		F6FC6DDB1C3E756C00FF8DB4 /* XLYTextKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DD81C3E756C00FF8DB4 /* XLYTextKitExtension.swift */; };
 		F6FC6DDC1C3E756C00FF8DB4 /* XLYTextLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FC6DD91C3E756C00FF8DB4 /* XLYTextLayoutManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F6FC6DD21C3D1A2C00FF8DB4 /* PBXContainerItemProxy */ = {
+		F6C0CF771D83D3F700701C06 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F6F8BA321C3D0749005A7A29 /* Project object */;
 			proxyType = 1;
@@ -36,13 +36,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F6FC6DCE1C3D184E00FF8DB4 /* Embed Frameworks */ = {
+		F6C0CF791D83D3F700701C06 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F6FC6DD11C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Embed Frameworks */,
+				F6C0CF761D83D3F700701C06 /* XLYTextKitExtension.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,7 +68,6 @@
 		F6FC6DD71C3E756C00FF8DB4 /* XLYHelperUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYHelperUtils.swift; sourceTree = "<group>"; };
 		F6FC6DD81C3E756C00FF8DB4 /* XLYTextKitExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextKitExtension.swift; sourceTree = "<group>"; };
 		F6FC6DD91C3E756C00FF8DB4 /* XLYTextLayoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLYTextLayoutManager.swift; sourceTree = "<group>"; };
-		F6FC6DDD1C3E75A600FF8DB4 /* XAutoLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XAutoLayout.framework; sourceTree = "<group>"; };
 		F6FC6DE11C3E773400FF8DB4 /* XLYTextKitExtension.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = XLYTextKitExtension.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6FC6DD01C3D1A2C00FF8DB4 /* XLYTextKitExtension.framework in Frameworks */,
+				F6C0CF751D83D3F700701C06 /* XLYTextKitExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +149,6 @@
 				F6FC6DC31C3D130000FF8DB4 /* dog1.png */,
 				F6FC6DC41C3D130000FF8DB4 /* dog2.png */,
 				F6FC6DC51C3D130000FF8DB4 /* dog3.png */,
-				F6FC6DDD1C3E75A600FF8DB4 /* XAutoLayout.framework */,
 			);
 			name = "Support Files";
 			sourceTree = "<group>";
@@ -204,12 +202,12 @@
 				F6FC6DA91C3D12B200FF8DB4 /* Sources */,
 				F6FC6DAA1C3D12B200FF8DB4 /* Frameworks */,
 				F6FC6DAB1C3D12B200FF8DB4 /* Resources */,
-				F6FC6DCE1C3D184E00FF8DB4 /* Embed Frameworks */,
+				F6C0CF791D83D3F700701C06 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F6FC6DD31C3D1A2C00FF8DB4 /* PBXTargetDependency */,
+				F6C0CF781D83D3F700701C06 /* PBXTargetDependency */,
 			);
 			name = XLYTextKitExtensionDemo;
 			productName = XLYTextKitExtensionDemo;
@@ -223,14 +221,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = kaizei;
 				TargetAttributes = {
 					F6F8BA3A1C3D0749005A7A29 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					F6FC6DAC1C3D12B200FF8DB4 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -301,10 +301,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F6FC6DD31C3D1A2C00FF8DB4 /* PBXTargetDependency */ = {
+		F6C0CF781D83D3F700701C06 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F6F8BA3A1C3D0749005A7A29 /* XLYTextKitExtension */;
-			targetProxy = F6FC6DD21C3D1A2C00FF8DB4 /* PBXContainerItemProxy */;
+			targetProxy = F6C0CF771D83D3F700701C06 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -341,8 +341,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -389,8 +391,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -410,6 +414,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -421,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -432,6 +438,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -439,6 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -449,14 +457,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		F6FC6DBF1C3D12B200FF8DB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -467,14 +476,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		F6FC6DC01C3D12B200FF8DB4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -485,6 +495,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
