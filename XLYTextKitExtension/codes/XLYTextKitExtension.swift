@@ -58,9 +58,9 @@ open class XLYPainter {
     
     public let type: PainterType
     public let zPosition: Int
-    let handler: (_ attributeName: String, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void
+    let handler: (_ attributeName: NSAttributedStringKey, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void
     
-    public init(type: PainterType, zPosition: Int = 0, handler: @escaping (_ attributeName: String, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void) {
+    public init(type: PainterType, zPosition: Int = 0, handler: @escaping (_ attributeName: NSAttributedStringKey, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void) {
         self.type = type
         self.zPosition = zPosition
         self.handler = handler
@@ -114,7 +114,7 @@ open class XLYTextAttachment: NSTextAttachment {
             var shouldUseInnerView = clickAction != nil
             if !shouldUseInnerView {
                 for index in 0..<length {
-                    if let attachment = storage.attribute(NSAttachmentAttributeName, at: index, effectiveRange: nil) as? XLYTextAttachment
+                    if let attachment = storage.attribute(.attachment, at: index, effectiveRange: nil) as? XLYTextAttachment
                         , attachment.viewGenerator != nil {
                         shouldUseInnerView = true
                         break

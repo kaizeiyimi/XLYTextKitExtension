@@ -30,7 +30,7 @@ class SecondViewController: UIViewController {
         let storage = customView.storage
         
         // normal text
-        let text1 = NSAttributedString(string: "normal + ", attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 14)])
+        let text1 = NSAttributedString(string: "normal + ", attributes: [.font : UIFont.systemFont(ofSize: 14)])
         storage.append(text1)
         
         // view attachment
@@ -49,7 +49,7 @@ class SecondViewController: UIViewController {
         
         // for all component in storage, we draw the outline and baseline
         let outline = XLYPainter(type: .foreground, handler: combinePainters([strokeLineUsedRect(color: .red, lineDashLengths:[2, 2]), strokeBaseline(color: .green)]))
-        storage.addAttribute("outline", value: outline, range: NSMakeRange(0, storage.length))
+        storage.addAttribute(NSAttributedStringKey("outline"), value: outline, range: NSMakeRange(0, storage.length))
     }
 
 }

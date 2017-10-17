@@ -102,7 +102,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
         for glyphIndex in glyphsToShow.location..<(glyphsToShow.location + glyphsToShow.length) {
             let charIndex = characterIndexForGlyph(at: glyphIndex)
             
-            guard let attachment = textStorage?.attribute(NSAttachmentAttributeName, at: charIndex, effectiveRange: nil) as? XLYTextAttachment else { continue }
+            guard let attachment = textStorage?.attribute(.attachment, at: charIndex, effectiveRange: nil) as? XLYTextAttachment else { continue }
             
             let key = AttachViewKey(attachment: attachment, charIndex: charIndex)
             let size = attachmentSize(forGlyphAt: glyphIndex)
@@ -124,9 +124,9 @@ open class XLYTextLayoutManager: NSLayoutManager {
                     if let view = attachViews[key] {
                         view.frame = rect
                         containerView.addSubview(view)
-                        let type: AnyClass? = NSClassFromString("UITextSelectionView")
+                        let selectionViewClass: AnyClass? = NSClassFromString("UITextSelectionView")
                         containerView.subviews.forEach {
-                            if type(of: $0).self === type {
+                            if type(of: $0).self === selectionViewClass {
                                 containerView.bringSubview(toFront: $0)
                             }
                         }
@@ -155,7 +155,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
     // MARK: - painter
     private func makePaintersDraw(at origin: CGPoint, type: XLYPainter.PainterType, glyphsToShow range: NSRange) {
         guard let context = UIGraphicsGetCurrentContext(), let storage = textStorage else { return }
-        typealias Item = (name: String, visualItems: [XLYVisualItem?], painter: XLYPainter)
+        typealias Item = (name: NSAttributedStringKey, visualItems: [XLYVisualItem?], painter: XLYPainter)
 
         enumerateLineFragments(forGlyphRange: range) { (lineRect, usedRect, container, glyphRange, _) -> Void in
             let charRange = self.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
@@ -186,9 +186,9 @@ open class XLYTextLayoutManager: NSLayoutManager {
                                 } else {
                                     var rect: CGRect = CGRect.zero, location: CGPoint, font: UIFont
                                     let attributes = storage.attributes(at: self.characterIndexForGlyph(at: glyphIndex), effectiveRange: nil)
-                                    font = attributes[NSFontAttributeName] as! UIFont
+                                    font = attributes[.font] as! UIFont
                                     let attachmentSize = self.attachmentSize(forGlyphAt: glyphIndex)
-                                    if let attachment = attributes[NSAttachmentAttributeName] as? NSTextAttachment
+                                    if let attachment = attributes[.attachment] as? NSTextAttachment
                                         , attachmentSize.isVisible {
                                             let y = attachment.bounds.origin.y
                                             location = self.location(forGlyphAt: glyphIndex)
@@ -209,7 +209,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
                         return (name: name, visualItems: visualItems, painter: painter)
                 }
                 }.flatMap { $0 }
-                .sorted { return $0.0.painter.zPosition < $0.1.painter.zPosition }
+                .sorted { return $0.painter.zPosition < $1.painter.zPosition }
                 .forEach { (name, items, painter) in
                     let visualItems = items.flatMap { ($0 != nil && $0!.rect.size.isVisible) ? $0 : nil }
                     let lineInfo = XLYLineVisualInfo(rect: lineRect.offsetBy(dx: origin.x, dy: origin.y), usedRect: usedRect.offsetBy(dx: origin.x, dy: origin.y), baseline: visualItems.first?.location.y ?? 0)

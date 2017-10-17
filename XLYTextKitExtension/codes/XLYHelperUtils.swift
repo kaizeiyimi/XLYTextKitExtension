@@ -8,9 +8,9 @@
 import Foundation
 
 // MARK: - helper. all are curried functions for XLYPainter.
-public func combinePainters(_ handlers: [(String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void])
-     -> (String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
-        return { (attributeName: String, context: CGContext, lineInfo: XLYLineVisualInfo, visualItems: [XLYVisualItem]) in
+public func combinePainters(_ handlers: [(NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void])
+     -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+        return { (attributeName: NSAttributedStringKey, context: CGContext, lineInfo: XLYLineVisualInfo, visualItems: [XLYVisualItem]) in
             handlers.forEach {
                 context.saveGState()
                 $0(attributeName, context, lineInfo, visualItems)
@@ -20,7 +20,7 @@ public func combinePainters(_ handlers: [(String, CGContext, XLYLineVisualInfo, 
 }
 
 public func strokeBaseline(color: UIColor, width: CGFloat = 1)
-    -> (String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, lineInfo, _) in
             color.setStroke()
             context.setLineWidth(width)
@@ -31,7 +31,7 @@ public func strokeBaseline(color: UIColor, width: CGFloat = 1)
 }
 
 public func strokeOutline(color: UIColor, width: CGFloat = 1, lineDashLengths:[CGFloat]? = nil)
-    -> (String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, _, visualItems) in
             color.setStroke()
             if let lengths = lineDashLengths , lengths.count > 0 {
@@ -44,7 +44,7 @@ public func strokeOutline(color: UIColor, width: CGFloat = 1, lineDashLengths:[C
 }
 
 public func strokeLineUsedRect(color: UIColor, width: CGFloat = 1, lineDashLengths:[CGFloat]? = nil)
-    -> (String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, lineInfo, _) in
             color.setStroke()
             context.setLineWidth(width)
@@ -57,7 +57,7 @@ public func strokeLineUsedRect(color: UIColor, width: CGFloat = 1, lineDashLengt
 
 
 public func fillLineUsedRect(color: UIColor, corner: CGFloat = 0, cornerFactor: CGFloat? = nil, insets: UIEdgeInsets = UIEdgeInsets.zero)
-    -> (String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, lineInfo, _) in
             color.setFill()
             let rect = UIEdgeInsetsInsetRect(lineInfo.usedRect, insets)
@@ -69,7 +69,7 @@ public func fillLineUsedRect(color: UIColor, corner: CGFloat = 0, cornerFactor: 
 }
 
 public func fillCombinedGlyphRects(color: UIColor, corner: CGFloat = 0, cornerFactor: CGFloat? = nil, insets: UIEdgeInsets = UIEdgeInsets.zero)
-    -> (String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, _, visualItems) in
             if visualItems.count >= 1 {
                 let rect = visualItems.suffix(from: 1).reduce(visualItems.first!.rect) {
@@ -85,7 +85,7 @@ public func fillCombinedGlyphRects(color: UIColor, corner: CGFloat = 0, cornerFa
 }
 
 public func fillIndependentGlyphRect(color: UIColor, corner: CGFloat = 0, cornerFactor: CGFloat? = nil, insets: UIEdgeInsets = UIEdgeInsets.zero)
-    -> (String, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, _, visualItems) in
             color.setFill()
             visualItems.forEach {
