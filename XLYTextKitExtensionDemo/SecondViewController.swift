@@ -15,7 +15,7 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let customView = CustomView()
-        customView.contentInsets = UIEdgeInsetsMake(30, 30, 30, 30)
+        customView.contentInsets = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
         customView.backgroundColor = UIColor.lightGray
         customView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView)
@@ -49,14 +49,14 @@ class SecondViewController: UIViewController {
         
         // for all component in storage, we draw the outline and baseline
         let outline = XLYPainter(type: .foreground, handler: combinePainters([strokeLineUsedRect(color: .red, lineDashLengths:[2, 2]), strokeBaseline(color: .green)]))
-        storage.addAttribute(NSAttributedStringKey("outline"), value: outline, range: NSMakeRange(0, storage.length))
+        storage.addAttribute(NSAttributedString.Key("outline"), value: outline, range: NSMakeRange(0, storage.length))
     }
 
 }
 
 // just an example. can be much more complicated.
 open class CustomView: UIView {
-    open let storage = NSTextStorage()
+    public let storage = NSTextStorage()
     open var contentInsets = UIEdgeInsets.zero
     
     let layoutManager = XLYTextLayoutManager()
@@ -77,7 +77,7 @@ open class CustomView: UIView {
     }
     
     open override func draw(_ rect: CGRect) {
-        container.size = UIEdgeInsetsInsetRect(rect, contentInsets).size
+        container.size = rect.inset(by: contentInsets).size
         let origin = CGPoint(x: contentInsets.left, y: contentInsets.top)
         let glyphRange = layoutManager.glyphRange(forCharacterRange: NSMakeRange(0, storage.length), actualCharacterRange: nil)
         layoutManager.drawBackground(forGlyphRange: glyphRange, at: origin)

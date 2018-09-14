@@ -8,9 +8,9 @@
 import Foundation
 
 // MARK: - helper. all are curried functions for XLYPainter.
-public func combinePainters(_ handlers: [(NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void])
-     -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
-        return { (attributeName: NSAttributedStringKey, context: CGContext, lineInfo: XLYLineVisualInfo, visualItems: [XLYVisualItem]) in
+public func combinePainters(_ handlers: [(NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void])
+    -> (NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+        return { (attributeName: NSAttributedString.Key, context: CGContext, lineInfo: XLYLineVisualInfo, visualItems: [XLYVisualItem]) in
             handlers.forEach {
                 context.saveGState()
                 $0(attributeName, context, lineInfo, visualItems)
@@ -20,7 +20,7 @@ public func combinePainters(_ handlers: [(NSAttributedStringKey, CGContext, XLYL
 }
 
 public func strokeBaseline(color: UIColor, width: CGFloat = 1)
-    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, lineInfo, _) in
             color.setStroke()
             context.setLineWidth(width)
@@ -31,7 +31,7 @@ public func strokeBaseline(color: UIColor, width: CGFloat = 1)
 }
 
 public func strokeOutline(color: UIColor, width: CGFloat = 1, lineDashLengths:[CGFloat]? = nil)
-    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, _, visualItems) in
             color.setStroke()
             if let lengths = lineDashLengths , lengths.count > 0 {
@@ -44,7 +44,7 @@ public func strokeOutline(color: UIColor, width: CGFloat = 1, lineDashLengths:[C
 }
 
 public func strokeLineUsedRect(color: UIColor, width: CGFloat = 1, lineDashLengths:[CGFloat]? = nil)
-    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, lineInfo, _) in
             color.setStroke()
             context.setLineWidth(width)
@@ -57,10 +57,10 @@ public func strokeLineUsedRect(color: UIColor, width: CGFloat = 1, lineDashLengt
 
 
 public func fillLineUsedRect(color: UIColor, corner: CGFloat = 0, cornerFactor: CGFloat? = nil, insets: UIEdgeInsets = UIEdgeInsets.zero)
-    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, lineInfo, _) in
             color.setFill()
-            let rect = UIEdgeInsetsInsetRect(lineInfo.usedRect, insets)
+            let rect = lineInfo.usedRect.inset(by: insets)
             let corner = cornerFactor.flatMap { $0 * rect.height } ?? corner
             let path = UIBezierPath(roundedRect: rect, cornerRadius: corner)
             context.addPath(path.cgPath)
@@ -69,7 +69,7 @@ public func fillLineUsedRect(color: UIColor, corner: CGFloat = 0, cornerFactor: 
 }
 
 public func fillCombinedGlyphRects(color: UIColor, corner: CGFloat = 0, cornerFactor: CGFloat? = nil, insets: UIEdgeInsets = UIEdgeInsets.zero)
-    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, _, visualItems) in
             if visualItems.count >= 1 {
                 let rect = visualItems.suffix(from: 1).reduce(visualItems.first!.rect) {
@@ -77,7 +77,7 @@ public func fillCombinedGlyphRects(color: UIColor, corner: CGFloat = 0, cornerFa
                 }
                 color.setFill()
                 let corner = cornerFactor.flatMap { $0 * rect.height } ?? corner
-                let path = UIBezierPath(roundedRect: UIEdgeInsetsInsetRect(rect, insets), cornerRadius: corner)
+                let path = UIBezierPath(roundedRect: rect.inset(by: insets), cornerRadius: corner)
                 context.addPath(path.cgPath)
                 context.fillPath()
             }
@@ -85,11 +85,11 @@ public func fillCombinedGlyphRects(color: UIColor, corner: CGFloat = 0, cornerFa
 }
 
 public func fillIndependentGlyphRect(color: UIColor, corner: CGFloat = 0, cornerFactor: CGFloat? = nil, insets: UIEdgeInsets = UIEdgeInsets.zero)
-    -> (NSAttributedStringKey, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
+    -> (NSAttributedString.Key, CGContext, XLYLineVisualInfo, [XLYVisualItem]) -> Void {
         return { (_, context, _, visualItems) in
             color.setFill()
             visualItems.forEach {
-                let rect = UIEdgeInsetsInsetRect($0.rect, insets)
+                let rect = $0.rect.inset(by: insets)
                 let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerFactor == nil ? corner : rect.height * cornerFactor!)
                 context.addPath(path.cgPath)
                 context.fillPath()

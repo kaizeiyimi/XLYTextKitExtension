@@ -67,7 +67,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
     }
     
     // MARK: - adjust attachment views
-    open override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
+    open override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorage.EditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
         defer {
             super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
         }
@@ -127,7 +127,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
                         let selectionViewClass: AnyClass? = NSClassFromString("UITextSelectionView")
                         containerView.subviews.forEach {
                             if type(of: $0).self === selectionViewClass {
-                                containerView.bringSubview(toFront: $0)
+                                containerView.bringSubviewToFront($0)
                             }
                         }
                         // for inner view
@@ -155,7 +155,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
     // MARK: - painter
     private func makePaintersDraw(at origin: CGPoint, type: XLYPainter.PainterType, glyphsToShow range: NSRange) {
         guard let context = UIGraphicsGetCurrentContext(), let storage = textStorage else { return }
-        typealias Item = (name: NSAttributedStringKey, visualItems: [XLYVisualItem?], painter: XLYPainter)
+        typealias Item = (name: NSAttributedString.Key, visualItems: [XLYVisualItem?], painter: XLYPainter)
 
         enumerateLineFragments(forGlyphRange: range) { (lineRect, usedRect, container, glyphRange, _) -> Void in
             let charRange = self.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)

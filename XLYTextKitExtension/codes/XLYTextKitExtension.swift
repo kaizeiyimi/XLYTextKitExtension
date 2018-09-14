@@ -58,9 +58,9 @@ open class XLYPainter {
     
     public let type: PainterType
     public let zPosition: Int
-    let handler: (_ attributeName: NSAttributedStringKey, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void
+    let handler: (_ attributeName: NSAttributedString.Key, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void
     
-    public init(type: PainterType, zPosition: Int = 0, handler: @escaping (_ attributeName: NSAttributedStringKey, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void) {
+    public init(type: PainterType, zPosition: Int = 0, handler: @escaping (_ attributeName: NSAttributedString.Key, _ context: CGContext, _ lineInfo: XLYLineVisualInfo, _ visualItems: [XLYVisualItem]) -> Void) {
         self.type = type
         self.zPosition = zPosition
         self.handler = handler
@@ -142,7 +142,7 @@ open class XLYTextAttachment: NSTextAttachment {
                 self.painter = { (context, rect) -> Void in
                     let _ = storage
                     let origin = CGPoint(x: rect.minX + insets.left, y: rect.minY + insets.top)
-                    container.size = UIEdgeInsetsInsetRect(rect, insets).size
+                    container.size = rect.inset(by: insets).size
                     manager.drawBackground(forGlyphRange: glyphRange, at: origin)
                     manager.drawGlyphs(forGlyphRange: glyphRange, at: origin)
                 }
@@ -248,7 +248,7 @@ final class InnerDrawView: UIView {
     }
     
     func draw(in context: CGContext) {
-        container.size = UIEdgeInsetsInsetRect(frame, insets).size
+        container.size = frame.inset(by: insets).size
         let origin = CGPoint(x: frame.minX + insets.left, y: frame.minY + insets.top)
         container.associatedView = self
         manager.drawBackground(forGlyphRange: glyphRange, at: origin)
