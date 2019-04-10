@@ -50,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F6F33346225DB01600E5CF1F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XLYTextKitExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F8BA3E1C3D0749005A7A29 /* XLYTextKitExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLYTextKitExtension.h; sourceTree = "<group>"; };
 		F6F8BA401C3D0749005A7A29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 		F6F8BA311C3D0749005A7A29 = {
 			isa = PBXGroup;
 			children = (
+				F6F33346225DB01600E5CF1F /* README.md */,
 				F6FC6DE11C3E773400FF8DB4 /* XLYTextKitExtension.podspec */,
 				F6F8BA3D1C3D0749005A7A29 /* XLYTextKitExtension */,
 				F6FC6DAE1C3D12B200FF8DB4 /* XLYTextKitExtensionDemo */,
@@ -221,22 +223,22 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = kaizei;
 				TargetAttributes = {
 					F6F8BA3A1C3D0749005A7A29 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1020;
 					};
 					F6FC6DAC1C3D12B200FF8DB4 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = F6F8BA351C3D0749005A7A29 /* Build configuration list for PBXProject "XLYTextKitExtension" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -332,6 +334,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -391,6 +394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -456,6 +460,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -474,6 +479,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -488,10 +494,10 @@
 					"$(PROJECT_DIR)/XLYTextKitExtensionDemo",
 				);
 				INFOPLIST_FILE = XLYTextKitExtensionDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -506,10 +512,10 @@
 					"$(PROJECT_DIR)/XLYTextKitExtensionDemo",
 				);
 				INFOPLIST_FILE = XLYTextKitExtensionDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kaizei.yimi.XLYTextKitExtensionDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

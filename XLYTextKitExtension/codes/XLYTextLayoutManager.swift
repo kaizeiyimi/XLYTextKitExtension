@@ -29,8 +29,8 @@ private final class AttachViewKey: Hashable {
         self.charIndex = charIndex
     }
     
-    var hashValue: Int {
-        return "\(Unmanaged.passUnretained(attachment).toOpaque())+\(charIndex)".hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine("\(Unmanaged.passUnretained(attachment).toOpaque())+\(charIndex)")
     }
 }
 
