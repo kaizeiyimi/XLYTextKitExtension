@@ -106,7 +106,7 @@ open class XLYTextLayoutManager: NSLayoutManager {
             
             let key = AttachViewKey(attachment: attachment, charIndex: charIndex)
             let size = attachmentSize(forGlyphAt: glyphIndex)
-            if attachment.canCustom && size.isVisible {
+            if size.isVisible {
                 var point = location(forGlyphAt: glyphIndex)
                 let lineRect = lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: nil)
                 point.x += origin.x + lineRect.origin.x

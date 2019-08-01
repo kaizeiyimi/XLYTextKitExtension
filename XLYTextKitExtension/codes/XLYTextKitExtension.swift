@@ -72,14 +72,22 @@ open class XLYPainter {
 
 open class XLYTextAttachment: NSTextAttachment {
     
-    let viewGenerator: (() -> UIView)?
-    let painter: ((_ context: CGContext, _ rect: CGRect) -> Void)?
+    internal let viewGenerator: (() -> UIView)?
+    internal let painter: ((_ context: CGContext, _ rect: CGRect) -> Void)?
     
     private let stringBounds: CGRect?
     
-    open var canCustom: Bool {
-        return image == nil && contents == nil && fileWrapper == nil
-    }
+    static let placeholderImage: UIImage = {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, UIScreen.main.scale)
+        let context = UIGraphicsGetCurrentContext()!
+        let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1, height: 1))
+        UIColor.clear.setFill()
+        context.addPath(path.cgPath)
+        context.fillPath()
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return image
+    }()
     
     public init(bounds: CGRect = CGRect.zero, viewGenerator: @escaping (() -> UIView)) {
         self.viewGenerator = viewGenerator
@@ -87,6 +95,7 @@ open class XLYTextAttachment: NSTextAttachment {
         self.stringBounds = nil
         super.init(data: nil, ofType: nil)
         self.bounds = bounds
+        self.image = XLYTextAttachment.placeholderImage
     }
     
     public init(bounds: CGRect = CGRect.zero, painter: @escaping (_ context: CGContext, _ rect: CGRect) -> Void) {
@@ -95,6 +104,7 @@ open class XLYTextAttachment: NSTextAttachment {
         self.stringBounds = nil
         super.init(data: nil, ofType: nil)
         self.bounds = bounds
+        self.image = XLYTextAttachment.placeholderImage
     }
     
     public enum BaseLineMode {  // negative mean move down
@@ -161,6 +171,7 @@ open class XLYTextAttachment: NSTextAttachment {
         }
         
         super.init(data: nil, ofType: nil)
+        self.image = XLYTextAttachment.placeholderImage
     }
     
     public init() {
@@ -169,7 +180,7 @@ open class XLYTextAttachment: NSTextAttachment {
         self.stringBounds = nil
         super.init(data: nil, ofType: nil)
     }
-    
+
     override init(data contentData: Data?, ofType uti: String?) {
         self.viewGenerator = nil
         self.painter = nil
@@ -185,7 +196,7 @@ open class XLYTextAttachment: NSTextAttachment {
     }
     
     override open func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
-        if canCustom && viewGenerator != nil {
+        if viewGenerator != nil {
             if let manager = textContainer?.layoutManager as? XLYTextLayoutManager {
                 manager.addAttachViewIfNeed(for: self, charIndex: charIndex)
                 if let v = manager.attachView(for: self, charIndex: charIndex) {
@@ -201,7 +212,7 @@ open class XLYTextAttachment: NSTextAttachment {
     
     override open var bounds: CGRect {
         get {
-            return (canCustom && stringBounds != nil) ? stringBounds! : super.bounds
+            return stringBounds ?? super.bounds
         }
         set {
             super.bounds = newValue
