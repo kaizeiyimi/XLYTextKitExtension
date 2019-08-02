@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F62F075822F3D1A70004E70A /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62F075722F3D1A70004E70A /* ThirdViewController.swift */; };
 		F6C0CF751D83D3F700701C06 /* XLYTextKitExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; };
 		F6C0CF761D83D3F700701C06 /* XLYTextKitExtension.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F6F8BA3F1C3D0749005A7A29 /* XLYTextKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F6F8BA3E1C3D0749005A7A29 /* XLYTextKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -50,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F62F075722F3D1A70004E70A /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		F6F33346225DB01600E5CF1F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F6F8BA3B1C3D0749005A7A29 /* XLYTextKitExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XLYTextKitExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F8BA3E1C3D0749005A7A29 /* XLYTextKitExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLYTextKitExtension.h; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				F6FC6DAF1C3D12B200FF8DB4 /* AppDelegate.swift */,
 				F6FC6DB11C3D12B200FF8DB4 /* FirstViewController.swift */,
 				F6FC6DB31C3D12B200FF8DB4 /* SecondViewController.swift */,
+				F62F075722F3D1A70004E70A /* ThirdViewController.swift */,
 				F6FC6DB51C3D12B200FF8DB4 /* Main.storyboard */,
 				F6FC6DB81C3D12B200FF8DB4 /* Assets.xcassets */,
 				F6FC6DBA1C3D12B200FF8DB4 /* LaunchScreen.storyboard */,
@@ -296,6 +299,7 @@
 			files = (
 				F6FC6DB41C3D12B200FF8DB4 /* SecondViewController.swift in Sources */,
 				F6FC6DB01C3D12B200FF8DB4 /* AppDelegate.swift in Sources */,
+				F62F075822F3D1A70004E70A /* ThirdViewController.swift in Sources */,
 				F6FC6DB21C3D12B200FF8DB4 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -378,7 +382,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -432,7 +436,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

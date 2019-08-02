@@ -96,3 +96,74 @@ public func fillIndependentGlyphRect(color: UIColor, corner: CGFloat = 0, corner
             }
         }
 }
+
+
+public final class StaticWrappableContainerView: UIView {
+    private let textView = UITextView()
+    private var views: [(UIView, CGFloat)] = []
+    private var rightConstraint: NSLayoutConstraint!
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        textView.setUseXLYLayoutManager()
+        textView.isScrollEnabled = false
+        if #available(iOS 11, *) {
+            textView.textDragInteraction?.isEnabled = false
+        }
+        textView.isEditable = false
+        textView.isSelectable = false
+        textView.textContainer.lineFragmentPadding = 0
+        textView.textContainerInset = .zero
+        textView.backgroundColor = .clear
+        textView.clipsToBounds = true
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(textView)
+        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        textView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        textView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        rightConstraint = textView.rightAnchor.constraint(equalTo: self.rightAnchor)
+        rightConstraint.isActive = true
+    }
+    
+    public func reset(_ views: [UIView], itemSpace: CGFloat = 0, lineSpace: CGFloat = 0) {
+        self.views = views.map { view in
+            let box = UIView()
+            let size: CGSize
+            if view.translatesAutoresizingMaskIntoConstraints {
+                view.sizeToFit()
+                size = view.frame.size
+                view.frame = CGRect(origin: .zero, size: size)
+                box.frame = CGRect(x: 0, y: 0, width: size.width + itemSpace, height: size.height)
+                box.addSubview(view)
+            } else {
+                size = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize, withHorizontalFittingPriority: .fittingSizeLevel, verticalFittingPriority: .fittingSizeLevel)
+                box.addSubview(view)
+                view.topAnchor.constraint(equalTo: box.topAnchor).isActive = true
+                view.leftAnchor.constraint(equalTo: box.leftAnchor).isActive = true
+                box.frame = CGRect(x: 0, y: 0, width: size.width + itemSpace, height: size.height)
+            }
+            return (box, size.width)
+        }
+        
+        let attrText = self.views.map{ (view, _) -> NSAttributedString in
+            NSAttributedString(attachment: XLYTextAttachment(bounds: view.frame, viewGenerator: { view }))
+        }.reduce(into: NSMutableAttributedString(), { $0.append($1) })
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpace
+        paragraphStyle.baseWritingDirection = .leftToRight
+        attrText.addAttributes([.paragraphStyle: paragraphStyle], range: NSMakeRange(0, attrText.length))
+        textView.textStorage.setAttributedString(attrText)
+    }
+}
+
